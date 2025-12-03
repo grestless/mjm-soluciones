@@ -75,7 +75,7 @@ function WhatsAppButton() {
             href: "https://wa.me/5493813321573",
             target: "_blank",
             rel: "noopener noreferrer",
-            className: "fixed bottom-8 right-8 md:bottom-10 md:right-10 z-[100] flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full shadow-lg shadow-inner bg-[#25D366]/90 backdrop-blur-sm backdrop-saturate-150 hover:shadow-xl transition-shadow group",
+            className: "fixed bottom-8 right-8 md:bottom-10 md:right-10 z-[100] flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full shadow-lg shadow-inner  backdrop-blur-sm backdrop-saturate-150 hover:shadow-xl transition-shadow group",
             initial: {
                 scale: 0,
                 opacity: 0,

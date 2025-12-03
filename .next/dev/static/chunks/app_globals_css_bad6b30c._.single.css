@@ -3620,6 +3620,11 @@
     border-color: var(--color-red-800);
   }
 
+  .dark\:bg-\[\#25D366\]\/60:is(.dark *) {
+    background-color: #25d36699;
+    background-color: lab(74.7716% -60.9649 41.133 / .6);
+  }
+
   .dark\:bg-card:is(.dark *) {
     background-color: var(--card);
   }

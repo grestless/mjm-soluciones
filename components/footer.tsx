@@ -4,18 +4,17 @@ export function Footer() {
   return (
     <footer className="bg-secondary text-secondary-foreground py-12 px-4">
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           {/* Logo y descripción */}
           <div className="md:col-span-2">
             <div className="flex items-center gap-2 mb-4">
               <div className="w-10 h-10 rounded-xl bg-accent flex items-center justify-center">
                 <Leaf className="w-6 h-6 text-accent-foreground" />
               </div>
-              <span className="font-bold text-lg">M.J.M Soluciones Ecológicas</span>
+              <span className="font-bold text-lg">MJM - Sociedad por Acciones Simplificada (SAS).</span>
             </div>
             <p className="text-secondary-foreground/80 max-w-md leading-relaxed">
-              Ciencia aplicada a la protección sostenible. Desarrollamos insecticidas ecológicos de alto rendimiento con
-              fórmula propia.
+              Estamos despegando. Gracias por ser parte de nuestro viaje.
             </p>
           </div>
 

@@ -46,7 +46,7 @@ export function ContactSection() {
   }
 
   return (
-    <section id="contacto" className="py-24 px-4 bg-gradient-to-b from-background to-muted/30 relative overflow-hidden">
+    <section id="contacto" className="py-16 md:py-20 lg:py-24 px-4 bg-gradient-to-b from-background to-muted/30 relative overflow-hidden">
       <div className="absolute inset-0 opacity-30 dark:opacity-10">
         <svg
           className="w-full h-full"

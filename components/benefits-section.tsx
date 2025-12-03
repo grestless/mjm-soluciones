@@ -6,23 +6,23 @@ export function BenefitsSection() {
   const benefits = [
     {
       icon: Beaker,
-      title: "Fórmula exclusiva y certificada",
-      description: "Desarrollo científico propio con años de investigación y pruebas de campo.",
+      title: "Polvo inteligente para Roedores",
+      description: "A diferencia de los venenos comunes que matan al instante alertando a la manada, nuestro producto engaña a la plaga. Actúa a los 3 o 4 días, permitiendo que tanto las crías como las adultas consuman el cebo, logrando la erradicación total.",
     },
     {
       icon: TrendingUp,
       title: "Eficacia comprobada en campo",
-      description: "Resultados medibles y consistentes en diferentes tipos de cultivos y ambientes.",
-    },
-    {
-      icon: Shield,
-      title: "Desarrollo científico local",
-      description: "Producción nacional con control de calidad en cada etapa del proceso.",
+      description: "Resultados medibles y consistentes en diferentes tipos de comercios, cultivos, ambientes y hogares. Más de 9.000 clientes avalan nuestros resultados.",
     },
     {
       icon: Leaf,
-      title: "Biodegradable y respetuoso",
-      description: "Sin impacto ambiental negativo, seguro para personas, animales y el ecosistema.",
+      title: "Pasta ecologica para Cucarachas",
+      description: "Un tratamiento nocturno diseñado para obligarlas a salir del nido. Les fascina el sabor, lo comen y mueren entre 5 y 8 días después, eliminando el problema de raíz.",
+    },
+    {
+      icon: Shield,
+      title: "Biodegradable, seguro y no tóxico",
+      description: "Sin impacto ambiental negativo, seguro para personas, animales y el ecosistema. Sin olor, sin tóxicos y sin riesgos.",
     },
   ]
 
@@ -30,9 +30,9 @@ export function BenefitsSection() {
     <section className="py-24 px-4 bg-muted/30">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-balance">¿Por qué elegirnos?</h2>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-balance">¿Por qué nos eligen?</h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto text-pretty">
-            Tecnología limpia aplicada al control de plagas con resultados profesionales
+            Todos nuestros envases incluyen un código QR escaneable con el modo de uso paso a paso.
           </p>
         </div>
 

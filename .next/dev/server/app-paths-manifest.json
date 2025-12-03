@@ -1,0 +1,6 @@
+{
+  "/casos-de-exito/page": "app/casos-de-exito/page.js",
+  "/manifest.webmanifest/route": "app/manifest.webmanifest/route.js",
+  "/page": "app/page.js",
+  "/quienes-somos/page": "app/quienes-somos/page.js"
+}

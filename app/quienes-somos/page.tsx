@@ -15,52 +15,37 @@ export default function QuienesSomosPage() {
 
   const timelineEvents = [
     {
-      year: "2018",
-      title: "El Comienzo",
+      year: "2025",
+      title: "Red de Distribuidores",
       description:
-        "M.J.M nace de la visión de crear soluciones ecológicas efectivas. Un equipo de químicos y biólogos se une para desarrollar la primera fórmula biodegradable.",
-      icon: Lightbulb,
-      color: "text-accent",
-    },
-    {
-      year: "2019",
-      title: "Primera Fórmula Patentada",
-      description:
-        "Después de meses de investigación, logramos nuestra primera fórmula patentada: un insecticida 100% biodegradable con eficacia comprobada del 98%.",
-      icon: Award,
+        "M.J.M se consolida como líder en soluciones ecológicas con presencia en todo el país y más de 200 distribuidores activos.",
+      icon: Users,
       color: "text-primary",
     },
     {
-      year: "2020",
-      title: "Expansión Regional",
+      year: "7 de Julio 2023",
+      title: "Oficialmente SAS",
       description:
-        "M.J.M expande sus operaciones a nivel regional, estableciendo alianzas con distribuidores en 5 provincias y alcanzando más de 500 clientes.",
-      icon: TrendingUp,
+        "Nos constituimos legalmente como Sociedad. Hoy somos MJM Soluciones Ecológicas SAS, con más de 9.000 clientes satisfechos.",
+      icon: Award,
       color: "text-accent",
     },
     {
       year: "2021",
-      title: "Certificación Ecológica",
+      title: "El Crecimiento",
       description:
-        "Obtenemos la certificación ecológica internacional, validando nuestro compromiso con el medio ambiente y la salud pública.",
-      icon: Leaf,
+        "La confianza de nuestros clientes nos impulsó. Dejamos las bolsitas y pasamos a envases profesionales con tecnología QR y videos tutoriales.",
+      icon: TrendingUp,
       color: "text-primary",
     },
+
     {
-      year: "2023",
-      title: "Red de Distribuidores",
+      year: "Septiembre 2020",
+      title: "El Inicio",
       description:
-        "Lanzamos nuestro programa de distribuidores, creando oportunidades de negocio para emprendedores comprometidos con soluciones sostenibles.",
-      icon: Users,
+        "Todo empezó con una idea y nuestro auto, vendiendo bolsitas de 50 gramos puerta a puerta y en grupos de Facebook en todo el Norte Argentino: Tucumán, Santiago, Termas, La Banda, Catamarca, La Rioja, Salta, Jujuy..",
+      icon: Lightbulb,
       color: "text-accent",
-    },
-    {
-      year: "2025",
-      title: "Presencia Nacional",
-      description:
-        "M.J.M se consolida como líder en soluciones ecológicas con presencia en todo el país y más de 200 distribuidores activos.",
-      icon: Globe,
-      color: "text-primary",
     },
   ]
 
@@ -136,17 +121,15 @@ export default function QuienesSomosPage() {
               {timelineEvents.map((event, index) => (
                 <ScrollReveal key={event.year} direction={index % 2 === 0 ? "left" : "right"} delay={index * 100}>
                   <div
-                    className={`flex flex-col md:flex-row items-center gap-6 ${
-                      index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
-                    }`}
+                    className={`flex flex-col md:flex-row items-center gap-6 ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+                      }`}
                   >
                     {/* Contenido */}
                     <div className={`flex-1 ${index % 2 === 0 ? "md:text-right" : "md:text-left"}`}>
                       <Card className="p-6 bg-card hover:shadow-xl transition-all duration-300 border-2 hover:border-primary/30">
                         <div
-                          className={`flex items-center gap-3 mb-3 ${
-                            index % 2 === 0 ? "md:justify-end" : "md:justify-start"
-                          } justify-start`}
+                          className={`flex items-center gap-3 mb-3 ${index % 2 === 0 ? "md:justify-end" : "md:justify-start"
+                            } justify-start`}
                         >
                           <Badge className={`${event.color} bg-transparent border-current text-lg px-3 py-1`}>
                             {event.year}

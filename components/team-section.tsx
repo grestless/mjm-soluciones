@@ -101,12 +101,11 @@ export function TeamSection() {
             return (
               <Card
                 key={index}
-                className={`p-5 md:p-6 relative overflow-hidden transition-all hover:shadow-xl flex flex-col ${
-                  plan.highlight ? "border-2 border-primary bg-primary/5 md:scale-105" : "border border-border"
-                }`}
+                className={`p-5 md:p-6 relative overflow-hidden transition-all hover:shadow-xl flex flex-col ${plan.highlight ? "border-2 border-primary bg-primary/5 md:scale-105" : "border border-border"
+                  }`}
               >
                 {plan.highlight && (
-                  <div className="absolute top-3 right-3 px-2 md:px-3 py-1 rounded-full bg-accent text-accent-foreground text-xs font-semibold">
+                  <div className="self-end px-2 md:px-3 py-1 rounded-full bg-accent text-accent-foreground text-xs font-semibold mb-2">
                     Más Popular
                   </div>
                 )}
@@ -130,11 +129,10 @@ export function TeamSection() {
                 </ul>
 
                 <Button
-                  className={`w-full rounded-full h-10 md:h-11 text-sm md:text-base ${
-                    plan.highlight
+                  className={`w-full rounded-full h-10 md:h-11 text-sm md:text-base ${plan.highlight
                       ? "bg-primary text-primary-foreground hover:bg-primary/90"
                       : "bg-secondary text-secondary-foreground hover:bg-secondary/90"
-                  }`}
+                    }`}
                   onClick={() => {
                     const element = document.getElementById("contacto")
                     if (element) element.scrollIntoView({ behavior: "smooth" })

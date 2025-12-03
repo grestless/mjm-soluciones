@@ -7,32 +7,32 @@ const products = [
   {
     id: 1,
     name: "Spray Anti Pulgas y Garrapatas",
-    image: "/images/producto1.png",
+    image: "/images/design-mode/producto1.png",
   },
   {
     id: 2,
     name: "Veneno para Cucarachas y Ratas",
-    image: "/images/producto2.png",
+    image: "/images/design-mode/producto2.png",
   },
   {
     id: 3,
     name: "Insecticida Multiuso",
-    image: "/images/producto3.png",
+    image: "/images/design-mode/producto3.png",
   },
   {
     id: 4,
     name: "Veneno para Cucarachas", // Updated nombre del producto 4 para reflejar la nueva imagen
-    image: "/images/producto4.png",
+    image: "/images/design-mode/producto4.png",
   },
   {
     id: 5,
     name: "Kit Anti Plagas Completo",
-    image: "/images/producto5.png",
+    image: "/images/design-mode/producto5.png",
   },
   {
     id: 6,
     name: "Matayuyos Concentrado",
-    image: "/images/producto6.png",
+    image: "/images/design-mode/producto6.png",
   },
 ]
 
@@ -50,13 +50,13 @@ export function ProductsGallery() {
               Algunos de nuestros productos destacados
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-pretty">
-               Todos nuestros productos cuentan con
+              Todos nuestros productos cuentan con
               certificación SENASA y están fabricados en San Miguel de Tucumán, Argentina.
             </p>
           </div>
         </ScrollReveal>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           {products.map((product, index) => (
             <ScrollReveal key={product.id} direction="up" delay={index * 100}>
               <div className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] cursor-pointer bg-white dark:bg-card aspect-square">

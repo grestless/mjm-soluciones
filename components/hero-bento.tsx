@@ -1,5 +1,6 @@
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import Link from "next/link"
 import { Shield, Leaf, Beaker, TrendingUp, CheckCircle2 } from "lucide-react"
 import { ScrollReveal } from "@/components/scroll-reveal"
 
@@ -42,26 +43,35 @@ export function HeroBento() {
       <div className="max-w-7xl mx-auto relative z-10">
         <ScrollReveal direction="up">
           <div className="mb-12 md:mb-16 lg:mb-20">
-            <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-6 md:mb-8 text-balance leading-tight">
-              M.J.M: Soluciones ecológicas para el control eficiente de plagas
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-bold mb-6 md:mb-8 text-balance leading-tight">
+              Soluciones definitivas para plagas: Efectividad sin riesgos para tu hogar.
             </h1>
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground max-w-4xl text-pretty leading-relaxed">
-              Insecticidas desarrollados con fórmula propia, seguros, biodegradables y de alto rendimiento
+              Productos no tóxicos, sin olor y con tecnología inteligente. De nuestra familia a la tuya.
             </p>
             <div className="flex flex-col sm:flex-row flex-wrap gap-3 md:gap-4 mt-6 md:mt-8">
-              <Button
-                size="lg"
-                className="rounded-full bg-accent text-accent-foreground hover:bg-accent/90 text-base md:text-lg px-6 md:px-8 py-5 md:py-6 w-full sm:w-auto"
+              <a
+                href="https://wa.me/5493813321573"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto"
               >
-                Conocer productos
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="rounded-full border-primary text-primary hover:bg-primary hover:text-primary-foreground text-base md:text-lg px-6 md:px-8 py-5 md:py-6 bg-transparent w-full sm:w-auto"
-              >
-                Ver casos de éxito
-              </Button>
+                <Button
+                  size="lg"
+                  className="rounded-full bg-accent text-accent-foreground hover:bg-accent/90 text-base md:text-lg px-6 md:px-8 py-5 md:py-6 w-full"
+                >
+                  Contactar por WhatsApp
+                </Button>
+              </a>
+              <Link href="/casos-de-exito" className="w-full sm:w-auto">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="rounded-full border-primary text-primary hover:bg-primary hover:text-primary-foreground text-base md:text-lg px-6 md:px-8 py-5 md:py-6 bg-transparent w-full"
+                >
+                  Ver casos de éxito
+                </Button>
+              </Link>
             </div>
           </div>
         </ScrollReveal>
@@ -72,7 +82,7 @@ export function HeroBento() {
           {/* Tarjeta 1: Fórmula exclusiva - 6 columnas */}
           <div className="md:col-span-6">
             <ScrollReveal direction="left" delay={100}>
-              <Card className="bg-gradient-to-br from-accent/10 to-primary/5 border-accent/20 p-6 md:p-8 flex flex-col justify-between h-full min-h-[350px] md:min-h-[400px] hover:shadow-xl transition-shadow">
+              <Card className="bg-gradient-to-br from-accent/10 to-primary/5 border-accent/20 p-6 md:p-8 flex flex-col justify-between h-full min-h-[300px] md:min-h-[350px] hover:shadow-xl transition-shadow">
                 <div>
                   <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-accent/20 flex items-center justify-center mb-3 md:mb-4">
                     <Beaker className="w-5 h-5 md:w-6 md:h-6 text-accent" />
@@ -86,9 +96,11 @@ export function HeroBento() {
                   </p>
                 </div>
                 <div className="mt-4 md:mt-6">
-                  <Button className="rounded-full bg-accent text-accent-foreground hover:bg-accent/90 w-full sm:w-auto">
-                    Conocer la fórmula
-                  </Button>
+                  <Link href="/#productos" className="w-full sm:w-auto">
+                    <Button className="rounded-full bg-accent text-accent-foreground hover:bg-accent/90 w-full sm:w-auto">
+                      Conocer productos
+                    </Button>
+                  </Link>
                 </div>
               </Card>
             </ScrollReveal>
@@ -97,7 +109,7 @@ export function HeroBento() {
           {/* Tarjeta 2: Imagen del producto - 6 columnas */}
           <div className="md:col-span-6">
             <ScrollReveal direction="right" delay={200}>
-              <Card className="bg-primary/5 border-primary/20 overflow-hidden relative hover:shadow-xl transition-shadow h-full min-h-[350px] md:min-h-[400px]">
+              <Card className="bg-primary/5 border-primary/20 overflow-hidden relative hover:shadow-xl transition-shadow h-full min-h-[300px] md:min-h-[350px]">
                 <div className="absolute inset-0 flex items-center justify-center">
                   <img
                     src="/images/design-mode/producto2.png"
@@ -117,9 +129,9 @@ export function HeroBento() {
           {/* SEGUNDA FILA: 4 + 4 + 4 columnas */}
 
           {/* Tarjeta 3: Eficacia comprobada - 4 columnas */}
-          <div className="md:col-span-4">
+          <div className="md:col-span-6 lg:col-span-4">
             <ScrollReveal direction="left" delay={100}>
-              <Card className="bg-gradient-to-br from-secondary/5 to-accent/5 border-secondary/20 p-4 md:p-5 flex flex-col justify-between h-[300px] md:h-[350px] hover:shadow-xl transition-shadow">
+              <Card className="bg-gradient-to-br from-secondary/5 to-accent/5 border-secondary/20 p-4 md:p-5 flex flex-col justify-between h-full min-h-[280px] md:min-h-[320px] hover:shadow-xl transition-shadow">
                 <div>
                   <div className="w-9 h-9 md:w-10 md:h-10 rounded-xl bg-secondary/20 flex items-center justify-center mb-2 md:mb-3">
                     <TrendingUp className="w-4 h-4 md:w-5 md:h-5 text-secondary-foreground" />
@@ -145,9 +157,9 @@ export function HeroBento() {
           </div>
 
           {/* Tarjeta 4: Aplicaciones versátiles - 4 columnas */}
-          <div className="md:col-span-4">
+          <div className="md:col-span-6 lg:col-span-4">
             <ScrollReveal direction="scale" delay={200}>
-              <Card className="bg-primary/5 border-primary/20 p-5 md:p-6 hover:shadow-xl transition-shadow h-full h-[300px] md:h-[350px] flex flex-col justify-between">
+              <Card className="bg-primary/5 border-primary/20 p-5 md:p-6 hover:shadow-xl transition-shadow h-full min-h-[280px] md:min-h-[320px] flex flex-col justify-between">
                 <div>
                   <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-primary/20 flex items-center justify-center mb-3 md:mb-4">
                     <Shield className="w-5 h-5 md:w-6 md:h-6 text-primary" />
@@ -177,9 +189,9 @@ export function HeroBento() {
           </div>
 
           {/* Tarjeta 5: Certificado ecológico - 4 columnas */}
-          <div className="md:col-span-4">
+          <div className="md:col-span-12 lg:col-span-4">
             <ScrollReveal direction="right" delay={300}>
-              <Card className="bg-gradient-to-br from-primary/10 via-accent/10 to-primary/5 border-primary/20 p-5 md:p-6 flex flex-col items-center justify-center text-center hover:shadow-xl transition-shadow h-full h-[300px] md:h-[350px]">
+              <Card className="bg-gradient-to-br from-primary/10 via-accent/10 to-primary/5 border-primary/20 p-5 md:p-6 flex flex-col items-center justify-center text-center hover:shadow-xl transition-shadow h-full min-h-[280px] md:min-h-[320px]">
                 <div>
                   <div className="w-12 h-12 md:w-16 md:h-16 rounded-2xl bg-primary/20 flex items-center justify-center mb-3 md:mb-4 mx-auto">
                     <Leaf className="w-6 h-6 md:w-8 md:h-8 text-primary" />

@@ -1,8 +1,35 @@
+"use client"
+
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { Shield, Leaf, Beaker, TrendingUp, CheckCircle2 } from "lucide-react"
 import { ScrollReveal } from "@/components/scroll-reveal"
+import { motion, useSpring, useTransform, useInView } from "framer-motion"
+import { useEffect, useRef } from "react"
+
+function Counter({ value, suffix = "", duration = 2 }: { value: number; suffix?: string; duration?: number }) {
+  const ref = useRef<HTMLSpanElement>(null)
+  const inView = useInView(ref, { once: true, margin: "-20px" })
+  const motionValue = useSpring(0, { duration: duration * 1000, bounce: 0 })
+  const rounded = useTransform(motionValue, (latest) => Math.round(latest))
+
+  useEffect(() => {
+    if (inView) {
+      motionValue.set(value)
+    }
+  }, [inView, value, motionValue])
+
+  useEffect(() => {
+    return rounded.on("change", (latest) => {
+      if (ref.current) {
+        ref.current.textContent = latest + suffix
+      }
+    })
+  }, [rounded, suffix])
+
+  return <span ref={ref} />
+}
 
 export function HeroBento() {
   return (
@@ -11,11 +38,45 @@ export function HeroBento() {
         <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <pattern id="molecules" x="0" y="0" width="120" height="120" patternUnits="userSpaceOnUse">
-              <circle cx="20" cy="20" r="4" fill="currentColor" className="text-primary" />
-              <circle cx="60" cy="30" r="5" fill="currentColor" className="text-accent" />
-              <circle cx="100" cy="25" r="3" fill="currentColor" className="text-primary" />
-              <line x1="20" y1="20" x2="60" y2="30" stroke="currentColor" strokeWidth="1" className="text-primary/30" />
-              <line
+              <motion.circle
+                cx="20"
+                cy="20"
+                r="4"
+                fill="currentColor"
+                className="text-primary"
+                animate={{ y: [0, -15, 0], opacity: [0.6, 1, 0.6], scale: [1, 1.1, 1] }}
+                transition={{ duration: 5, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+              />
+              <motion.circle
+                cx="60"
+                cy="30"
+                r="5"
+                fill="currentColor"
+                className="text-accent"
+                animate={{ y: [0, 15, 0], x: [0, 10, 0], opacity: [0.7, 1, 0.7] }}
+                transition={{ duration: 7, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut", delay: 0.5 }}
+              />
+              <motion.circle
+                cx="100"
+                cy="25"
+                r="3"
+                fill="currentColor"
+                className="text-primary"
+                animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5], y: [0, -10, 0] }}
+                transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut", delay: 1 }}
+              />
+              <motion.line
+                x1="20"
+                y1="20"
+                x2="60"
+                y2="30"
+                stroke="currentColor"
+                strokeWidth="1"
+                className="text-primary/30"
+                animate={{ opacity: [0.1, 0.6, 0.1], pathLength: [0.8, 1, 0.8] }}
+                transition={{ duration: 5, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+              />
+              <motion.line
                 x1="60"
                 y1="30"
                 x2="100"
@@ -23,16 +84,24 @@ export function HeroBento() {
                 stroke="currentColor"
                 strokeWidth="1"
                 className="text-primary/30"
+                animate={{ opacity: [0.1, 0.6, 0.1], pathLength: [0.8, 1, 0.8] }}
+                transition={{ duration: 7, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut", delay: 0.5 }}
               />
-              <path
+              <motion.path
                 d="M40 70 Q40 60, 45 55 Q50 60, 50 70 Q50 80, 45 85 Q40 80, 40 70 Z"
                 fill="currentColor"
                 className="text-accent/40"
+                animate={{ rotate: [0, 15, 0], scale: [0.9, 1.2, 0.9], y: [0, -5, 0] }}
+                style={{ originX: "45px", originY: "70px" }}
+                transition={{ duration: 8, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
               />
-              <path
+              <motion.path
                 d="M80 90 Q80 82, 84 78 Q88 82, 88 90 Q88 98, 84 102 Q80 98, 80 90 Z"
                 fill="currentColor"
                 className="text-primary/40"
+                animate={{ y: [0, -20, 0], rotate: [0, -10, 0], scale: [1, 1.1, 1] }}
+                style={{ originX: "84px", originY: "90px" }}
+                transition={{ duration: 9, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut", delay: 1.5 }}
               />
             </pattern>
           </defs>
@@ -82,7 +151,7 @@ export function HeroBento() {
           {/* Tarjeta 1: Fórmula exclusiva - 6 columnas */}
           <div className="md:col-span-6">
             <ScrollReveal direction="left" delay={100}>
-              <Card className="bg-gradient-to-br from-accent/10 to-primary/5 border-accent/20 p-6 md:p-8 flex flex-col justify-between h-full min-h-[300px] md:min-h-[350px] hover:shadow-xl transition-shadow">
+              <Card className="bg-gradient-to-br from-accent/10 to-primary/5 border-accent/20 p-6 md:p-8 flex flex-col justify-between h-full min-h-[300px] md:min-h-[350px] shadow-lg shadow-inner backdrop-blur-sm backdrop-saturate-150 hover:shadow-xl transition-all">
                 <div>
                   <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-accent/20 flex items-center justify-center mb-3 md:mb-4">
                     <Beaker className="w-5 h-5 md:w-6 md:h-6 text-accent" />
@@ -109,7 +178,7 @@ export function HeroBento() {
           {/* Tarjeta 2: Imagen del producto - 6 columnas */}
           <div className="md:col-span-6">
             <ScrollReveal direction="right" delay={200}>
-              <Card className="bg-primary/5 border-primary/20 overflow-hidden relative hover:shadow-xl transition-shadow h-full min-h-[300px] md:min-h-[350px]">
+              <Card className="bg-primary/5 border-primary/20 overflow-hidden relative shadow-lg shadow-inner backdrop-blur-sm backdrop-saturate-150 hover:shadow-xl transition-all h-full min-h-[300px] md:min-h-[350px]">
                 <div className="absolute inset-0 flex items-center justify-center">
                   <img
                     src="/images/design-mode/producto2.png"
@@ -131,7 +200,7 @@ export function HeroBento() {
           {/* Tarjeta 3: Eficacia comprobada - 4 columnas */}
           <div className="md:col-span-6 lg:col-span-4">
             <ScrollReveal direction="left" delay={100}>
-              <Card className="bg-gradient-to-br from-secondary/5 to-accent/5 border-secondary/20 p-4 md:p-5 flex flex-col justify-between h-full min-h-[280px] md:min-h-[320px] hover:shadow-xl transition-shadow">
+              <Card className="bg-gradient-to-br from-secondary/5 to-accent/5 border-secondary/20 p-4 md:p-5 flex flex-col justify-between h-full min-h-[280px] md:min-h-[320px] shadow-lg shadow-inner backdrop-blur-sm backdrop-saturate-150 hover:shadow-xl transition-all">
                 <div>
                   <div className="w-9 h-9 md:w-10 md:h-10 rounded-xl bg-secondary/20 flex items-center justify-center mb-2 md:mb-3">
                     <TrendingUp className="w-4 h-4 md:w-5 md:h-5 text-secondary-foreground" />
@@ -139,15 +208,21 @@ export function HeroBento() {
                   <h3 className="text-lg md:text-xl font-bold mb-3 md:mb-4">Eficacia comprobada</h3>
                   <div className="space-y-2 md:space-y-3">
                     <div>
-                      <div className="text-2xl md:text-3xl font-bold text-accent">98%</div>
+                      <div className="text-2xl md:text-3xl font-bold text-accent">
+                        <Counter value={98} suffix="%" />
+                      </div>
                       <p className="text-xs text-muted-foreground">Eliminación de plagas</p>
                     </div>
                     <div>
-                      <div className="text-2xl md:text-3xl font-bold text-primary">100%</div>
+                      <div className="text-2xl md:text-3xl font-bold text-primary">
+                        <Counter value={100} suffix="%" />
+                      </div>
                       <p className="text-xs text-muted-foreground">Biodegradable</p>
                     </div>
                     <div>
-                      <div className="text-2xl md:text-3xl font-bold text-secondary">24h</div>
+                      <div className="text-2xl md:text-3xl font-bold text-secondary">
+                        <Counter value={24} suffix="h" />
+                      </div>
                       <p className="text-xs text-muted-foreground">Acción rápida</p>
                     </div>
                   </div>
@@ -159,7 +234,7 @@ export function HeroBento() {
           {/* Tarjeta 4: Aplicaciones versátiles - 4 columnas */}
           <div className="md:col-span-6 lg:col-span-4">
             <ScrollReveal direction="scale" delay={200}>
-              <Card className="bg-primary/5 border-primary/20 p-5 md:p-6 hover:shadow-xl transition-shadow h-full min-h-[280px] md:min-h-[320px] flex flex-col justify-between">
+              <Card className="bg-primary/5 border-primary/20 p-5 md:p-6 shadow-lg shadow-inner backdrop-blur-sm backdrop-saturate-150 hover:shadow-xl transition-all h-full min-h-[280px] md:min-h-[320px] flex flex-col justify-between">
                 <div>
                   <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-primary/20 flex items-center justify-center mb-3 md:mb-4">
                     <Shield className="w-5 h-5 md:w-6 md:h-6 text-primary" />
@@ -191,7 +266,7 @@ export function HeroBento() {
           {/* Tarjeta 5: Certificado ecológico - 4 columnas */}
           <div className="md:col-span-12 lg:col-span-4">
             <ScrollReveal direction="right" delay={300}>
-              <Card className="bg-gradient-to-br from-primary/10 via-accent/10 to-primary/5 border-primary/20 p-5 md:p-6 flex flex-col items-center justify-center text-center hover:shadow-xl transition-shadow h-full min-h-[280px] md:min-h-[320px]">
+              <Card className="bg-gradient-to-br from-primary/10 via-accent/10 to-primary/5 border-primary/20 p-5 md:p-6 flex flex-col items-center justify-center text-center shadow-lg shadow-inner backdrop-blur-sm backdrop-saturate-150 hover:shadow-xl transition-all h-full min-h-[280px] md:min-h-[320px]">
                 <div>
                   <div className="w-12 h-12 md:w-16 md:h-16 rounded-2xl bg-primary/20 flex items-center justify-center mb-3 md:mb-4 mx-auto">
                     <Leaf className="w-6 h-6 md:w-8 md:h-8 text-primary" />

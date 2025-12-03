@@ -106,7 +106,7 @@ export function ContactSection() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <Card className="p-8 border-primary/10 shadow-xl bg-card/80 backdrop-blur-sm">
+          <Card className="p-8 border-primary/20 shadow-xl shadow-inner bg-card/80 backdrop-blur-sm backdrop-saturate-150">
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
@@ -203,7 +203,7 @@ export function ContactSection() {
 
           {/* Información de contacto */}
           <div className="space-y-6">
-            <Card className="p-6 border-primary/10 hover:border-primary/30 transition-all hover:shadow-lg bg-card/80 backdrop-blur-sm">
+            <Card className="p-6 border-primary/20 hover:border-primary/30 transition-all hover:shadow-lg shadow-inner bg-card/80 backdrop-blur-sm backdrop-saturate-150">
               <div className="flex items-start gap-4">
                 <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center flex-shrink-0 shadow-sm">
                   <Mail className="w-7 h-7 text-primary" />
@@ -220,7 +220,7 @@ export function ContactSection() {
               </div>
             </Card>
 
-            <Card className="p-6 border-accent/10 hover:border-accent/30 transition-all hover:shadow-lg bg-card/80 backdrop-blur-sm">
+            <Card className="p-6 border-accent/20 hover:border-accent/30 transition-all hover:shadow-lg shadow-inner bg-card/80 backdrop-blur-sm backdrop-saturate-150">
               <div className="flex items-start gap-4">
                 <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-accent/20 to-accent/10 flex items-center justify-center flex-shrink-0 shadow-sm">
                   <Phone className="w-7 h-7 text-accent" />
@@ -234,7 +234,7 @@ export function ContactSection() {
               </div>
             </Card>
 
-            <Card className="p-6 border-secondary/10 hover:border-secondary/30 transition-all hover:shadow-lg bg-card/80 backdrop-blur-sm">
+            <Card className="p-6 border-secondary/20 hover:border-secondary/30 transition-all hover:shadow-lg shadow-inner bg-card/80 backdrop-blur-sm backdrop-saturate-150">
               <div className="flex items-start gap-4">
                 <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-secondary/20 to-secondary/10 flex items-center justify-center flex-shrink-0 shadow-sm">
                   <MapPin className="w-7 h-7 text-secondary-foreground" />
@@ -247,7 +247,7 @@ export function ContactSection() {
               </div>
             </Card>
 
-            <Card className="p-6 bg-gradient-to-br from-primary/10 via-primary/5 to-accent/5 border-primary/20 shadow-lg">
+            <Card className="p-6 bg-gradient-to-br from-primary/10 via-primary/5 to-accent/5 border-primary/20 shadow-lg shadow-inner backdrop-blur-sm backdrop-saturate-150">
               <h3 className="font-bold text-lg mb-3 text-primary">Compromiso de calidad M.J.M</h3>
               <p className="text-sm text-foreground/80 leading-relaxed">
                 Cada producto de M.J.M Soluciones Ecológicas está diseñado para cuidar lo que importa: la salud, el

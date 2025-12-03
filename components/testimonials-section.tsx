@@ -115,7 +115,7 @@ export function TestimonialsSection({ limit }: TestimonialsSectionProps) {
             <ScrollReveal key={index} direction="up" delay={index * 150}>
               <div className="group relative h-full">
                 <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/50 to-accent/50 rounded-2xl blur opacity-30 group-hover:opacity-100 transition duration-500"></div>
-                <Card className="relative h-full p-8 bg-card/50 backdrop-blur-sm border-primary/10 hover:border-primary/30 transition-all duration-300 flex flex-col">
+                <Card className="relative h-full p-8 bg-card/50 backdrop-blur-sm backdrop-saturate-150 shadow-inner border-primary/10 hover:border-primary/30 transition-all duration-300 flex flex-col">
                   <div className="absolute -top-6 left-8">
                     <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${testimonial.gradient} flex items-center justify-center text-white font-bold text-xl shadow-lg transform group-hover:scale-110 transition-transform duration-300`}>
                       {testimonial.initials}

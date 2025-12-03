@@ -70,7 +70,7 @@ export function MasonryGallery() {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 bg-muted/20">
                         {galleryImages.map((image, index) => (
                             <ScrollReveal key={index} direction="up" delay={index * 50} className={getBentoClass(index)}>
-                                <div className="h-full w-full rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
+                                <div className="h-full w-full rounded-xl overflow-hidden shadow-lg shadow-inner border border-primary/10 hover:shadow-xl transition-all duration-300">
                                     <img
                                         src={image.src}
                                         alt={image.alt}

@@ -41,7 +41,7 @@ export function BenefitsSection() {
             const Icon = benefit.icon
             return (
               <ScrollReveal key={index} direction="up" delay={index * 100}>
-                <Card className="p-6 hover:shadow-lg transition-shadow h-full">
+                <Card className="p-6 hover:shadow-lg transition-all h-full shadow-inner backdrop-blur-sm backdrop-saturate-150 bg-card/50 border-primary/10 hover:border-primary/30">
                   <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
                     <Icon className="w-6 h-6 text-primary" />
                   </div>

@@ -106,7 +106,7 @@ export function FloatingNav() {
         <div className="max-w-7xl mx-auto relative">
           {/* Logo - Left */}
           <div className="absolute left-0 top-0 z-50">
-            <div className="backdrop-blur-md bg-accent/90 border border-accent/30 rounded-2xl px-3 py-2 md:px-4 md:py-3 shadow-lg h-[44px] md:h-[52px] flex items-center">
+            <div className="backdrop-blur-md backdrop-saturate-150 bg-accent/90 border border-accent/30 rounded-2xl px-3 py-2 md:px-4 md:py-3 shadow-lg shadow-inner h-[44px] md:h-[52px] flex items-center">
               <Link href="/" onClick={() => setIsOpen(false)}>
                 <h1 className="font-logo text-sm md:text-lg font-extrabold tracking-[0.15em] leading-none cursor-pointer hover:opacity-80 transition-opacity">
                   <span className="text-primary">MJM</span>{" "}
@@ -118,7 +118,7 @@ export function FloatingNav() {
 
           {/* Desktop Navigation - Center */}
           <nav className="absolute left-1/2 -translate-x-1/2 top-0 w-auto max-w-[calc(100%-200px)] lg:max-w-2xl z-50">
-            <div className="backdrop-blur-md border rounded-2xl shadow-lg h-[44px] md:h-[52px] items-center w-auto px-2 hidden lg:flex bg-transparent border-accent">
+            <div className="backdrop-blur-md backdrop-saturate-150 border border-accent/30 rounded-2xl shadow-lg shadow-inner h-[44px] md:h-[52px] items-center w-auto px-2 hidden lg:flex bg-transparent">
               <div className="flex items-center justify-center gap-0.5 w-full">
                 <div className="flex items-center gap-0.5">
                   <Button
@@ -188,7 +188,7 @@ export function FloatingNav() {
             <Button
               variant="ghost"
               size="icon"
-              className="lg:hidden h-[44px] w-[44px] text-primary hover:bg-accent/90 rounded-2xl backdrop-blur-md bg-accent/90 border border-accent/30 shadow-lg relative z-50"
+              className="lg:hidden h-[44px] w-[44px] text-primary hover:bg-accent/90 rounded-2xl backdrop-blur-md backdrop-saturate-150 bg-accent/90 border border-accent/30 shadow-lg shadow-inner relative z-50"
               onClick={() => setIsOpen(!isOpen)}
             >
               <AnimatePresence mode="wait">
@@ -219,7 +219,7 @@ export function FloatingNav() {
             {/* Solicitar información - Solo desktop */}
             <Button
               onClick={() => scrollToSection("contacto")}
-              className="hidden md:block backdrop-blur-md bg-accent hover:bg-accent/90 text-accent-foreground border border-accent/30 rounded-2xl px-4 shadow-lg font-semibold h-[52px] transition-all hover:scale-105 hover:shadow-xl text-primary uppercase text-xs whitespace-nowrap"
+              className="hidden md:block backdrop-blur-md backdrop-saturate-150 bg-accent hover:bg-accent/90 text-accent-foreground border border-accent/30 rounded-2xl px-4 shadow-lg shadow-inner font-semibold h-[52px] transition-all hover:scale-105 hover:shadow-xl text-primary uppercase text-xs whitespace-nowrap"
             >
               Solicitar información
             </Button>
@@ -235,7 +235,7 @@ export function FloatingNav() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-40 bg-background/80 backdrop-blur-[12px] lg:hidden flex flex-col pt-[80px] px-6 pb-8"
+            className="fixed inset-0 z-40 bg-background/80 backdrop-blur-[12px] backdrop-saturate-150 lg:hidden flex flex-col pt-[80px] px-6 pb-8"
           >
             <motion.div
               variants={menuVariants}
@@ -260,7 +260,7 @@ export function FloatingNav() {
                           <span className="text-lg font-semibold text-foreground/90 group-hover:text-primary transition-colors">
                             {item.label}
                           </span>
-                          <ArrowRight className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 duration-300" />
+                          <ArrowRight className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-all opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 group-hover:scale-110 duration-300" />
                         </div>
                       </Link>
                     ) : (
@@ -271,7 +271,7 @@ export function FloatingNav() {
                         <span className="text-lg font-semibold text-foreground/90 group-hover:text-primary transition-colors">
                           {item.label}
                         </span>
-                        <ArrowRight className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 duration-300" />
+                        <ArrowRight className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-all opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 group-hover:scale-110 duration-300" />
                       </button>
                     )}
                   </motion.div>

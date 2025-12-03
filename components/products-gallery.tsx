@@ -59,7 +59,7 @@ export function ProductsGallery() {
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           {products.map((product, index) => (
             <ScrollReveal key={product.id} direction="up" delay={index * 100}>
-              <div className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] cursor-pointer bg-white dark:bg-card aspect-square">
+              <div className="group relative overflow-hidden rounded-2xl shadow-lg shadow-inner border border-primary/10 hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] cursor-pointer bg-white dark:bg-card aspect-square">
                 <img
                   src={product.image || "/placeholder.svg"}
                   alt={product.name}

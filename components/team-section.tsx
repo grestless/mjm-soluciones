@@ -101,7 +101,7 @@ export function TeamSection() {
             return (
               <Card
                 key={index}
-                className={`p-5 md:p-6 relative overflow-hidden transition-all hover:shadow-xl flex flex-col ${plan.highlight ? "border-2 border-primary bg-primary/5 md:scale-105" : "border border-border"
+                className={`p-5 md:p-6 relative overflow-hidden transition-all hover:shadow-xl flex flex-col shadow-inner backdrop-blur-sm backdrop-saturate-150 ${plan.highlight ? "border-2 border-primary bg-primary/5 md:scale-105" : "border border-border/50 bg-card/50"
                   }`}
               >
                 {plan.highlight && (
@@ -130,8 +130,8 @@ export function TeamSection() {
 
                 <Button
                   className={`w-full rounded-full h-10 md:h-11 text-sm md:text-base ${plan.highlight
-                      ? "bg-primary text-primary-foreground hover:bg-primary/90"
-                      : "bg-secondary text-secondary-foreground hover:bg-secondary/90"
+                    ? "bg-primary text-primary-foreground hover:bg-primary/90"
+                    : "bg-secondary text-secondary-foreground hover:bg-secondary/90"
                     }`}
                   onClick={() => {
                     const element = document.getElementById("contacto")
@@ -145,7 +145,7 @@ export function TeamSection() {
           })}
         </div>
 
-        <div className="text-center bg-gradient-to-br from-primary/10 via-accent/5 to-primary/10 rounded-2xl md:rounded-3xl p-8 md:p-12 border border-border/50 shadow-lg">
+        <div className="text-center bg-gradient-to-br from-primary/10 via-accent/5 to-primary/10 rounded-2xl md:rounded-3xl p-8 md:p-12 border border-border/50 shadow-lg shadow-inner backdrop-blur-sm backdrop-saturate-150">
           <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-3 md:mb-4 px-4">
             ¿Tienes un plan personalizado en mente?
           </h3>

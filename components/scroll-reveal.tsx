@@ -20,6 +20,7 @@ export function ScrollReveal({ children, direction = "up", delay = 0, className 
             setTimeout(() => {
               entry.target.classList.add("visible")
             }, delay)
+            observer.unobserve(entry.target)
           }
         })
       },

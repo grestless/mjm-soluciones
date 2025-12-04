@@ -13,11 +13,7 @@ export default function Home() {
   return (
     <main className="min-h-screen">
       <FloatingNav />
-      <ScrollReveal direction="up" delay={200}>
-        <div id="inicio">
-          <HeroBento />
-        </div>
-      </ScrollReveal>
+      <HeroBento />
       <ScrollReveal direction="up" delay={200}>
         <div id="beneficios">
           <BenefitsSection />

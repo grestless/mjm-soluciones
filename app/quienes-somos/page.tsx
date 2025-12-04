@@ -43,7 +43,7 @@ export default function QuienesSomosPage() {
       year: "Septiembre 2020",
       title: "El Inicio",
       description:
-        "Todo empezó con una idea y nuestro auto, vendiendo bolsitas de 50 gramos puerta a puerta y en grupos de Facebook en todo el Norte Argentino: Tucumán, Santiago, Termas, La Banda, Catamarca, La Rioja, Salta, Jujuy..",
+        "Todo empezó con una idea y nuestro auto, vendiendo bolsitas pequeñas de veneno puerta a puerta y en grupos de Facebook en todo el Norte Argentino: Tucumán, Santiago, Termas, La Banda, Catamarca, La Rioja, Salta, Jujuy..",
       icon: Lightbulb,
       color: "text-accent",
     },

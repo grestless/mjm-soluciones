@@ -929,6 +929,7 @@ function ScrollReveal({ children, direction = "up", delay = 0, className = "" })
                                         entry.target.classList.add("visible");
                                     }
                                 }["ScrollReveal.useEffect"], delay);
+                                observer.unobserve(entry.target);
                             }
                         }
                     }["ScrollReveal.useEffect"]);
@@ -958,7 +959,7 @@ function ScrollReveal({ children, direction = "up", delay = 0, className = "" })
         children: children
     }, void 0, false, {
         fileName: "[project]/components/scroll-reveal.tsx",
-        lineNumber: 53,
+        lineNumber: 54,
         columnNumber: 5
     }, this);
 }

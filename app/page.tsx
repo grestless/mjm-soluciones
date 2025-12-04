@@ -13,33 +13,35 @@ export default function Home() {
   return (
     <main className="min-h-screen">
       <FloatingNav />
-      <div id="inicio">
-        <HeroBento />
-      </div>
-      <ScrollReveal direction="up">
+      <ScrollReveal direction="up" delay={200}>
+        <div id="inicio">
+          <HeroBento />
+        </div>
+      </ScrollReveal>
+      <ScrollReveal direction="up" delay={200}>
         <div id="beneficios">
           <BenefitsSection />
         </div>
       </ScrollReveal>
-      <ScrollReveal direction="up" delay={100}>
+      <ScrollReveal direction="up" delay={200}>
         <div id="productos">
           <ProductsGallery />
         </div>
       </ScrollReveal>
-      <ScrollReveal direction="up" delay={100}>
+      <ScrollReveal direction="up" delay={200}>
         <RotatingTextSeparator />
       </ScrollReveal>
-      <ScrollReveal direction="up" delay={100}>
+      <ScrollReveal direction="up" delay={200}>
         <div id="casos">
           <TestimonialsSection limit={3} />
         </div>
       </ScrollReveal>
-      <ScrollReveal direction="up" delay={100}>
+      <ScrollReveal direction="up" delay={200}>
         <div id="equipo">
           <TeamSection />
         </div>
       </ScrollReveal>
-      <ScrollReveal direction="up" delay={100}>
+      <ScrollReveal direction="up" delay={200}>
         <div id="contacto">
           <ContactSection />
         </div>

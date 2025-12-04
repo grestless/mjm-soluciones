@@ -8,7 +8,7 @@ import { ScrollReveal } from "@/components/scroll-reveal"
 import { motion, useSpring, useTransform, useInView } from "framer-motion"
 import { useEffect, useRef } from "react"
 
-function Counter({ value, suffix = "", duration = 2 }: { value: number; suffix?: string; duration?: number }) {
+function Counter({ value, suffix = "", duration = 7 }: { value: number; suffix?: string; duration?: number }) {
   const ref = useRef<HTMLSpanElement>(null)
   const inView = useInView(ref, { once: true, margin: "-20px" })
   const motionValue = useSpring(0, { duration: duration * 1000, bounce: 0 })

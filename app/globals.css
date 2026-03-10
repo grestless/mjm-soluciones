@@ -204,3 +204,16 @@
 .animate-on-scroll-scale.visible {
   animation: scaleIn 0.8s ease-out forwards;
 }
+
+/* Utilities */
+@layer utilities {
+  .hide-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+  }
+}
+

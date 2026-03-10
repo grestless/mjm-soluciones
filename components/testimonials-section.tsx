@@ -1,8 +1,11 @@
+"use client"
+
 import { Card } from "@/components/ui/card"
-import { Quote, ArrowRight } from "lucide-react"
+import { Quote, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react"
 import { ScrollReveal } from "@/components/scroll-reveal"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import { useRef, useState, useEffect } from "react"
 
 interface TestimonialsSectionProps {
   limit?: number
@@ -95,13 +98,52 @@ export function TestimonialsSection({ limit }: TestimonialsSectionProps) {
 
   const displayTestimonials = limit ? testimonials.slice(0, limit) : testimonials
 
+  const scrollContainerRef = useRef<HTMLDivElement>(null)
+  const [scrollProgress, setScrollProgress] = useState(0)
+  const [canScrollLeft, setCanScrollLeft] = useState(false)
+  const [canScrollRight, setCanScrollRight] = useState(true)
+
+  const handleScroll = () => {
+    if (scrollContainerRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current
+      const maxScroll = scrollWidth - clientWidth
+
+      // Update progress bar
+      const progress = maxScroll > 0 ? (scrollLeft / maxScroll) * 100 : 0
+      setScrollProgress(progress)
+
+      // Update button states
+      setCanScrollLeft(scrollLeft > 0)
+      setCanScrollRight(scrollLeft < maxScroll - 5) // -5px buffer for rounding errors
+    }
+  }
+
+  // Initial check on mount
+  useEffect(() => {
+    handleScroll()
+    window.addEventListener('resize', handleScroll)
+    return () => window.removeEventListener('resize', handleScroll)
+  }, [])
+
+  const scroll = (direction: 'left' | 'right') => {
+    if (scrollContainerRef.current) {
+      const container = scrollContainerRef.current
+      const scrollAmount = window.innerWidth < 768 ? container.clientWidth : 450 + 32 // card width + gap
+
+      container.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth'
+      })
+    }
+  }
+
   return (
-    <section className="py-20 px-4 relative overflow-hidden">
+    <section className="py-20 px-0 md:px-4 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/5 via-background to-background -z-10" />
 
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-20">
+      <ScrollReveal direction="up" className="max-w-7xl mx-auto relative px-4 md:px-0">
+        <div className="text-center mb-12">
           <h2 className="text-4xl md:text-6xl font-bold mb-6 text-balance bg-clip-text text-accent bg-gradient-to-r from-primary to-primary/60">
             Voces de Confianza
           </h2>
@@ -110,54 +152,95 @@ export function TestimonialsSection({ limit }: TestimonialsSectionProps) {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Navigation Controls positioned absolutely on larger screens */}
+        <div className="hidden md:flex absolute top-[55%] -translate-y-1/2 left-[-1.5rem] right-[-1.5rem] justify-between items-center z-20 pointer-events-none px-0">
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={() => scroll('left')}
+            disabled={!canScrollLeft}
+            className="pointer-events-auto rounded-full w-12 h-12 bg-background border-primary/20 hover:border-primary shadow-md transition-all disabled:opacity-30 disabled:hover:border-primary/20"
+          >
+            <ChevronLeft className="w-6 h-6 text-primary" />
+          </Button>
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={() => scroll('right')}
+            disabled={!canScrollRight}
+            className="pointer-events-auto rounded-full w-12 h-12 bg-background border-primary/20 hover:border-primary shadow-md transition-all disabled:opacity-30 disabled:hover:border-primary/20"
+          >
+            <ChevronRight className="w-6 h-6 text-primary" />
+          </Button>
+        </div>
+
+        <div
+          ref={scrollContainerRef}
+          onScroll={handleScroll}
+          className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-10 pt-4 hide-scrollbar px-4 lg:px-0"
+        >
           {displayTestimonials.map((testimonial, index) => (
-            <ScrollReveal key={index} direction="up" delay={index * 150}>
-              <div className="group relative h-full">
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/50 to-accent/50 rounded-2xl blur opacity-30 group-hover:opacity-100 transition duration-500"></div>
-                <Card className="relative h-full p-8 bg-card/50 backdrop-blur-sm backdrop-saturate-150 shadow-inner border-primary/10 hover:border-primary/30 transition-all duration-300 flex flex-col">
-                  <div className="absolute -top-6 left-8">
-                    <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${testimonial.gradient} flex items-center justify-center text-white font-bold text-xl shadow-lg transform group-hover:scale-110 transition-transform duration-300`}>
+            <div key={index} className="snap-start shrink-0 w-[85vw] md:w-[400px] lg:w-[420px] h-auto py-2 flex">
+              <div className="group relative h-full w-full flex pt-6 flex-1">
+                <Card className="relative w-full px-8 pb-8 pt-10 bg-transparent shadow-[0_8px_30px_rgb(0,0,0,0.08)] border-primary/10 hover:border-primary/30 transition-all duration-300 flex flex-col rounded-[2rem] z-10">
+                  {/* Background container with overflow-hidden to prevent bleeding, keeping the outer Card unclipped */}
+                  <div className="absolute inset-0 bg-card rounded-[2rem] overflow-hidden -z-10">
+                    {/* Inner hover glow scoped to the background shape */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+                  </div>
+
+                  <div className="absolute -top-6 left-8 z-20">
+                    <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${testimonial.gradient} flex items-center justify-center text-white font-bold text-2xl shadow-lg transform group-hover:-translate-y-1 transition-transform duration-300 ring-4 ring-background`}>
                       {testimonial.initials}
                     </div>
                   </div>
 
-                  <Quote className="w-8 h-8 text-primary/20 absolute top-8 right-8" />
+                  <Quote className="w-10 h-10 text-primary/10 absolute top-8 right-8 rotate-180" />
 
-                  <div className="mt-8 flex-grow">
-                    <p className="text-lg text-foreground/90 mb-6 leading-relaxed font-medium">
+                  <div className="mt-2 flex-grow">
+                    <p className="text-base md:text-lg text-foreground/80 mb-6 leading-relaxed font-medium italic relative z-10 transition-colors duration-300 group-hover:text-foreground">
                       "{testimonial.quote}"
                     </p>
                   </div>
 
-                  <div className="border-t border-primary/10 mt-auto">
-                    <div className="flex flex-col">
-                      <span className="font-bold text-lg text-foreground">{testimonial.author}</span>
-                      <span className="text-sm text-muted-foreground font-medium">{testimonial.role}</span>
-                      <span className="text-xs text-accent mt-2 uppercase tracking-wider font-semibold bg-primary/10 w-fit px-2 py-1 rounded-full">
-                        {testimonial.ubicacion}
-                      </span>
+                  <div className="border-t border-primary/10 pt-6 mt-auto relative z-10 shrink-0">
+                    <div className="flex flex-col gap-1">
+                      <span className="font-bold text-lg text-foreground tracking-tight">{testimonial.author}</span>
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-muted-foreground font-medium">{testimonial.role}</span>
+                        <span className="text-[10px] md:text-xs text-primary font-bold uppercase tracking-widest bg-primary/10 px-3 py-1.5 rounded-full shrink-0 ml-2">
+                          {testimonial.ubicacion}
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </Card>
               </div>
-            </ScrollReveal>
+            </div>
           ))}
         </div>
 
+        {/* Scroll Progress Bar */}
+        <div className="max-w-md mx-auto mt-4 mb-8 px-8">
+          <div className="h-1.5 w-full bg-primary/10 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-primary rounded-full transition-all duration-300 ease-out"
+              style={{ width: `${Math.max(5, scrollProgress)}%` }}
+            />
+          </div>
+        </div>
+
         {limit && (
-          <div className="mt-12 text-center">
-            <ScrollReveal direction="up" delay={300}>
-              <Button asChild size="lg" className="rounded-full px-8">
-                <Link href="/casos-de-exito">
-                  Ver más casos de éxito
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-            </ScrollReveal>
+          <div className="mt-8 text-center">
+            <Button asChild size="lg" className="rounded-full px-8">
+              <Link href="/casos-de-exito">
+                Ver más casos de éxito
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
           </div>
         )}
-      </div>
+      </ScrollReveal>
     </section>
   )
 }

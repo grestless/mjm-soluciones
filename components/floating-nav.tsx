@@ -106,11 +106,11 @@ export function FloatingNav() {
         <div className="max-w-7xl mx-auto relative">
           {/* Logo - Left */}
           <div className="absolute left-0 top-0 z-50">
-            <div className="backdrop-blur-md backdrop-saturate-150 bg-accent/90 border border-accent/30 rounded-2xl px-3 py-2 md:px-4 md:py-3 shadow-lg shadow-inner h-[44px] md:h-[52px] flex items-center">
+            <div className="backdrop-blur-md backdrop-saturate-150 bg-accent/90 rounded-2xl px-3 py-2 md:px-4 md:py-3 shadow-[0_4px_30px_rgba(0,0,0,0.1)] h-[44px] md:h-[52px] flex items-center">
               <Link href="/" onClick={() => setIsOpen(false)}>
-                <h1 className="font-logo text-sm md:text-lg font-extrabold tracking-[0.15em] leading-none cursor-pointer hover:opacity-80 transition-opacity">
-                  <span className="text-primary">MJM</span>{" "}
-                  <span className="text-primary/80 text-[10px] md:text-sm tracking-[0.1em]">SOLUCIONES</span>
+                <h1 className="font-[Helvetica,Arial,sans-serif] text-base md:text-xl font-bold leading-none cursor-pointer hover:opacity-80 transition-opacity flex items-baseline gap-1">
+                  <span className="text-primary tracking-tight">MJM</span>
+                  <span className="text-primary/80 text-[11px] md:text-sm tracking-wide font-medium">SOLUCIONES</span>
                 </h1>
               </Link>
             </div>
@@ -118,61 +118,61 @@ export function FloatingNav() {
 
           {/* Desktop Navigation - Center */}
           <nav className="absolute left-1/2 -translate-x-1/2 top-0 w-auto max-w-[calc(100%-200px)] lg:max-w-2xl z-50">
-            <div className="backdrop-blur-md backdrop-saturate-150 border border-accent/30 rounded-2xl shadow-lg shadow-inner h-[44px] md:h-[52px] items-center w-auto px-2 hidden lg:flex bg-transparent">
-              <div className="flex items-center justify-center gap-0.5 w-full">
-                <div className="flex items-center gap-0.5">
+            <div className="backdrop-blur-md backdrop-saturate-150 rounded-2xl shadow-[0_4px_30px_rgba(0,0,0,0.1)] h-[44px] md:h-[52px] items-center w-auto px-2 hidden lg:flex bg-background/40">
+              <div className="flex items-center justify-center gap-1 w-full">
+                {[
+                  { id: "inicio", label: "Inicio" },
+                  { id: "beneficios", label: "Beneficios" },
+                  { id: "productos", label: "Productos" },
+                ].map((item) => (
+                  <Button
+                    key={item.id}
+                    variant="ghost"
+                    className="relative group rounded-full h-9 px-4 text-foreground/80 hover:text-primary hover:bg-transparent transition-all text-sm font-medium whitespace-nowrap overflow-hidden"
+                    onClick={() => scrollToSection(item.id)}
+                  >
+                    <span className="relative z-10">{item.label}</span>
+                    <span className="absolute bottom-0 left-0 w-full h-[2px] bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full" />
+                    <span className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full" />
+                  </Button>
+                ))}
+
+                <Link href="/quienes-somos">
                   <Button
                     variant="ghost"
-                    className="rounded-full h-9 px-3 text-foreground hover:bg-primary/10 hover:text-white transition-all text-xs font-medium whitespace-nowrap"
-                    onClick={() => scrollToSection("inicio")}
+                    className="relative group rounded-full h-9 px-4 text-foreground/80 hover:text-primary hover:bg-transparent transition-all text-sm font-medium whitespace-nowrap overflow-hidden"
                   >
-                    Inicio
+                    <span className="relative z-10">Quiénes Somos</span>
+                    <span className="absolute bottom-0 left-0 w-full h-[2px] bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full" />
+                    <span className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full" />
                   </Button>
+                </Link>
+                <Link href="/casos-de-exito">
                   <Button
                     variant="ghost"
-                    className="rounded-full h-9 px-3 text-foreground hover:bg-primary/10 hover:text-white transition-all text-xs font-medium whitespace-nowrap"
-                    onClick={() => scrollToSection("beneficios")}
+                    className="relative group rounded-full h-9 px-4 text-foreground/80 hover:text-primary hover:bg-transparent transition-all text-sm font-medium whitespace-nowrap overflow-hidden"
                   >
-                    Beneficios
+                    <span className="relative z-10">Casos</span>
+                    <span className="absolute bottom-0 left-0 w-full h-[2px] bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full" />
+                    <span className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full" />
                   </Button>
+                </Link>
+
+                {[
+                  { id: "equipo", label: "Únete" },
+                  { id: "contacto", label: "Contacto" },
+                ].map((item) => (
                   <Button
+                    key={item.id}
                     variant="ghost"
-                    className="rounded-full h-9 px-3 text-foreground hover:bg-primary/10 hover:text-white transition-all text-xs font-medium whitespace-nowrap"
-                    onClick={() => scrollToSection("productos")}
+                    className="relative group rounded-full h-9 px-4 text-foreground/80 hover:text-primary hover:bg-transparent transition-all text-sm font-medium whitespace-nowrap overflow-hidden"
+                    onClick={() => scrollToSection(item.id)}
                   >
-                    Productos
+                    <span className="relative z-10">{item.label}</span>
+                    <span className="absolute bottom-0 left-0 w-full h-[2px] bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full" />
+                    <span className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full" />
                   </Button>
-                  <Link href="/quienes-somos">
-                    <Button
-                      variant="ghost"
-                      className="rounded-full h-9 px-3 text-foreground hover:bg-primary/10 hover:text-white transition-all text-xs font-medium whitespace-nowrap"
-                    >
-                      Quiénes Somos
-                    </Button>
-                  </Link>
-                  <Link href="/casos-de-exito">
-                    <Button
-                      variant="ghost"
-                      className="rounded-full h-9 px-3 text-foreground hover:bg-primary/10 hover:text-white transition-all text-xs font-medium whitespace-nowrap"
-                    >
-                      Casos
-                    </Button>
-                  </Link>
-                  <Button
-                    variant="ghost"
-                    className="rounded-full h-9 px-3 text-foreground hover:bg-primary/10 hover:text-white transition-all text-xs font-medium whitespace-nowrap"
-                    onClick={() => scrollToSection("equipo")}
-                  >
-                    Únete
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    className="rounded-full h-9 px-3 text-foreground hover:bg-primary/10 hover:text-white transition-all text-xs font-medium whitespace-nowrap"
-                    onClick={() => scrollToSection("contacto")}
-                  >
-                    Contacto
-                  </Button>
-                </div>
+                ))}
               </div>
             </div>
           </nav>
@@ -188,7 +188,7 @@ export function FloatingNav() {
             <Button
               variant="ghost"
               size="icon"
-              className="lg:hidden h-[44px] w-[44px] text-primary hover:bg-accent/90 rounded-2xl backdrop-blur-md backdrop-saturate-150 bg-accent/90 border border-accent/30 shadow-lg shadow-inner relative z-50"
+              className="lg:hidden h-[44px] w-[44px] text-primary hover:bg-accent/90 rounded-2xl backdrop-blur-md backdrop-saturate-150 bg-accent/90 shadow-[0_4px_30px_rgba(0,0,0,0.1)] relative z-50 transition-all hover:scale-105"
               onClick={() => setIsOpen(!isOpen)}
             >
               <AnimatePresence mode="wait">
@@ -219,9 +219,10 @@ export function FloatingNav() {
             {/* Solicitar información - Solo desktop */}
             <Button
               onClick={() => scrollToSection("contacto")}
-              className="hidden md:block backdrop-blur-md backdrop-saturate-150 bg-accent hover:bg-accent/90 text-accent-foreground border border-accent/30 rounded-2xl px-4 shadow-lg shadow-inner font-semibold h-[52px] transition-all hover:scale-105 hover:shadow-xl text-primary uppercase text-xs whitespace-nowrap"
+              className="hidden md:block backdrop-blur-md backdrop-saturate-150 bg-accent hover:bg-accent/90 text-primary rounded-2xl px-5 shadow-[0_4px_30px_rgba(0,0,0,0.1)] font-semibold h-[52px] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_8px_40px_rgba(0,0,0,0.15)] uppercase text-xs tracking-wide whitespace-nowrap relative overflow-hidden group"
             >
-              Solicitar información
+              <span className="relative z-10">Solicitar información</span>
+              <div className="absolute inset-0 h-full w-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-transparent via-primary/10 to-transparent -translate-x-full group-hover:translate-x-full ease-out" />
             </Button>
           </div>
         </div>

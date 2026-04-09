@@ -106,19 +106,27 @@ export function FloatingNav() {
         <div className="max-w-7xl mx-auto relative">
           {/* Logo - Left */}
           <div className="absolute left-0 top-0 z-50">
-            <div className="backdrop-blur-md backdrop-saturate-150 bg-accent/90 rounded-2xl px-3 py-2 md:px-4 md:py-3 shadow-[0_4px_30px_rgba(0,0,0,0.1)] h-[44px] md:h-[52px] flex items-center">
+            <motion.div 
+              initial={{ x: -20, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              className="clay-card rounded-2xl px-4 py-2 md:px-5 md:py-3 h-[44px] md:h-[52px] flex items-center group cursor-pointer"
+            >
               <Link href="/" onClick={() => setIsOpen(false)}>
-                <h1 className="font-[Helvetica,Arial,sans-serif] text-base md:text-xl font-bold leading-none cursor-pointer hover:opacity-80 transition-opacity flex items-baseline gap-1">
-                  <span className="text-primary tracking-tight">MJM</span>
-                  <span className="text-primary/80 text-[11px] md:text-sm tracking-wide font-medium">SOLUCIONES</span>
+                <h1 className="font-heading text-base md:text-xl font-black leading-none flex items-baseline gap-1.5">
+                  <span className="text-primary tracking-tighter transition-colors group-hover:text-accent">MJM</span>
+                  <span className="text-foreground/60 text-[10px] md:text-xs tracking-[0.2em] font-bold uppercase">Soluciones</span>
                 </h1>
               </Link>
-            </div>
+            </motion.div>
           </div>
 
           {/* Desktop Navigation - Center */}
           <nav className="absolute left-1/2 -translate-x-1/2 top-0 w-auto max-w-[calc(100%-200px)] lg:max-w-2xl z-50">
-            <div className="backdrop-blur-md backdrop-saturate-150 rounded-2xl shadow-[0_4px_30px_rgba(0,0,0,0.1)] h-[44px] md:h-[52px] items-center w-auto px-2 hidden lg:flex bg-background/40">
+            <motion.div 
+              initial={{ y: -20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              className="clay-card rounded-2xl h-[44px] md:h-[52px] items-center w-auto px-2 hidden lg:flex bg-background/60 backdrop-blur-xl"
+            >
               <div className="flex items-center justify-center gap-1 w-full">
                 {[
                   { id: "inicio", label: "Inicio" },
@@ -128,33 +136,31 @@ export function FloatingNav() {
                   <Button
                     key={item.id}
                     variant="ghost"
-                    className="relative group rounded-full h-9 px-4 text-foreground/80 hover:text-primary hover:bg-transparent transition-all text-sm font-medium whitespace-nowrap overflow-hidden"
+                    className="relative group rounded-full h-9 px-4 text-foreground/70 hover:text-primary hover:bg-primary/5 transition-all text-sm font-bold font-heading whitespace-nowrap"
                     onClick={() => scrollToSection(item.id)}
                   >
                     <span className="relative z-10">{item.label}</span>
-                    <span className="absolute bottom-0 left-0 w-full h-[2px] bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full" />
-                    <span className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full" />
+                    <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-primary rounded-full scale-0 group-hover:scale-100 transition-transform duration-300" />
                   </Button>
                 ))}
 
                 <Link href="/quienes-somos">
                   <Button
                     variant="ghost"
-                    className="relative group rounded-full h-9 px-4 text-foreground/80 hover:text-primary hover:bg-transparent transition-all text-sm font-medium whitespace-nowrap overflow-hidden"
+                    className="relative group rounded-full h-9 px-4 text-foreground/70 hover:text-primary hover:bg-primary/5 transition-all text-sm font-bold font-heading whitespace-nowrap"
                   >
                     <span className="relative z-10">Quiénes Somos</span>
-                    <span className="absolute bottom-0 left-0 w-full h-[2px] bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full" />
-                    <span className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full" />
+                    <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-primary rounded-full scale-0 group-hover:scale-100 transition-transform duration-300" />
                   </Button>
                 </Link>
+                
                 <Link href="/casos-de-exito">
                   <Button
                     variant="ghost"
-                    className="relative group rounded-full h-9 px-4 text-foreground/80 hover:text-primary hover:bg-transparent transition-all text-sm font-medium whitespace-nowrap overflow-hidden"
+                    className="relative group rounded-full h-9 px-4 text-foreground/70 hover:text-primary hover:bg-primary/5 transition-all text-sm font-bold font-heading whitespace-nowrap"
                   >
                     <span className="relative z-10">Casos</span>
-                    <span className="absolute bottom-0 left-0 w-full h-[2px] bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full" />
-                    <span className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full" />
+                    <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-primary rounded-full scale-0 group-hover:scale-100 transition-transform duration-300" />
                   </Button>
                 </Link>
 
@@ -165,30 +171,35 @@ export function FloatingNav() {
                   <Button
                     key={item.id}
                     variant="ghost"
-                    className="relative group rounded-full h-9 px-4 text-foreground/80 hover:text-primary hover:bg-transparent transition-all text-sm font-medium whitespace-nowrap overflow-hidden"
+                    className="relative group rounded-full h-9 px-4 text-foreground/70 hover:text-primary hover:bg-primary/5 transition-all text-sm font-bold font-heading whitespace-nowrap"
                     onClick={() => scrollToSection(item.id)}
                   >
                     <span className="relative z-10">{item.label}</span>
-                    <span className="absolute bottom-0 left-0 w-full h-[2px] bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full" />
-                    <span className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full" />
+                    <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-primary rounded-full scale-0 group-hover:scale-100 transition-transform duration-300" />
                   </Button>
                 ))}
               </div>
-            </div>
+            </motion.div>
           </nav>
 
           {/* Right buttons */}
           <div className="absolute right-0 top-0 flex items-center gap-2 z-50">
             {/* Theme Toggle - Solo desktop */}
-            <div className="hidden md:block">
-              <ThemeToggle />
-            </div>
+            <motion.div 
+              initial={{ x: 20, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              className="hidden md:block"
+            >
+              <div className="clay-card p-1 rounded-2xl">
+                <ThemeToggle />
+              </div>
+            </motion.div>
 
             {/* Mobile Menu Button */}
             <Button
               variant="ghost"
               size="icon"
-              className="lg:hidden h-[44px] w-[44px] text-primary hover:bg-accent/90 rounded-2xl backdrop-blur-md backdrop-saturate-150 bg-accent/90 shadow-[0_4px_30px_rgba(0,0,0,0.1)] relative z-50 transition-all hover:scale-105"
+              className="lg:hidden h-[44px] w-[44px] text-primary hover:bg-accent/20 rounded-2xl clay-card relative z-50 transition-all active:scale-90"
               onClick={() => setIsOpen(!isOpen)}
             >
               <AnimatePresence mode="wait">
@@ -217,13 +228,19 @@ export function FloatingNav() {
             </Button>
 
             {/* Solicitar información - Solo desktop */}
-            <Button
-              onClick={() => scrollToSection("contacto")}
-              className="hidden md:block backdrop-blur-md backdrop-saturate-150 bg-accent hover:bg-accent/90 text-primary rounded-2xl px-5 shadow-[0_4px_30px_rgba(0,0,0,0.1)] font-semibold h-[52px] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_8px_40px_rgba(0,0,0,0.15)] uppercase text-xs tracking-wide whitespace-nowrap relative overflow-hidden group"
+            <motion.div
+              initial={{ x: 20, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ delay: 0.1 }}
+              className="hidden md:block"
             >
-              <span className="relative z-10">Solicitar información</span>
-              <div className="absolute inset-0 h-full w-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-transparent via-primary/10 to-transparent -translate-x-full group-hover:translate-x-full ease-out" />
-            </Button>
+              <Button
+                onClick={() => scrollToSection("contacto")}
+                className="clay-button rounded-2xl px-6 h-[52px] font-heading font-black uppercase text-[10px] tracking-[0.15em] transition-all hover:scale-105 active:scale-95"
+              >
+                Solicitar información
+              </Button>
+            </motion.div>
           </div>
         </div>
       </div>
@@ -235,17 +252,17 @@ export function FloatingNav() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-40 bg-background/80 backdrop-blur-[12px] backdrop-saturate-150 lg:hidden flex flex-col pt-[80px] px-6 pb-8"
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-40 bg-background/60 backdrop-blur-2xl lg:hidden flex flex-col pt-[100px] px-6 pb-12"
           >
             <motion.div
               variants={menuVariants}
               initial="initial"
               animate="animate"
               exit="exit"
-              className="flex flex-col h-full"
+              className="flex flex-col h-full gap-6"
             >
-              <div className="flex-1 flex flex-col gap-2 overflow-y-auto py-4">
+              <div className="flex-1 flex flex-col gap-3 overflow-y-auto py-4">
                 {menuItems.map((item, i) => (
                   <motion.div
                     key={item.label}
@@ -257,22 +274,26 @@ export function FloatingNav() {
                   >
                     {item.href ? (
                       <Link href={item.href} onClick={() => setIsOpen(false)} className="block w-full">
-                        <div className="group flex items-center justify-between p-4 rounded-2xl hover:bg-accent/50 transition-colors border border-transparent hover:border-accent/30">
-                          <span className="text-lg font-semibold text-foreground/90 group-hover:text-primary transition-colors">
+                        <div className="group flex items-center justify-between p-5 rounded-3xl clay-card hover:bg-primary/5 transition-all">
+                          <span className="text-xl font-heading font-extrabold text-foreground/90 group-hover:text-primary transition-colors">
                             {item.label}
                           </span>
-                          <ArrowRight className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-all opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 group-hover:scale-110 duration-300" />
+                          <div className="bg-primary/10 p-2 rounded-full group-hover:bg-primary group-hover:text-white transition-all">
+                            <ArrowRight className="h-5 w-5" />
+                          </div>
                         </div>
                       </Link>
                     ) : (
                       <button
                         onClick={item.action}
-                        className="w-full text-left group flex items-center justify-between p-4 rounded-2xl hover:bg-accent/50 transition-colors border border-transparent hover:border-accent/30"
+                        className="w-full text-left group flex items-center justify-between p-5 rounded-3xl clay-card hover:bg-primary/5 transition-all"
                       >
-                        <span className="text-lg font-semibold text-foreground/90 group-hover:text-primary transition-colors">
+                        <span className="text-xl font-heading font-extrabold text-foreground/90 group-hover:text-primary transition-colors">
                           {item.label}
                         </span>
-                        <ArrowRight className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-all opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 group-hover:scale-110 duration-300" />
+                        <div className="bg-primary/10 p-2 rounded-full group-hover:bg-primary group-hover:text-white transition-all">
+                          <ArrowRight className="h-5 w-5" />
+                        </div>
                       </button>
                     )}
                   </motion.div>
@@ -285,16 +306,16 @@ export function FloatingNav() {
                 initial="initial"
                 animate="animate"
                 exit="exit"
-                className="mt-auto pt-6 border-t border-border/50 flex flex-col gap-4"
+                className="mt-auto pt-8 border-t border-border/20 flex flex-col gap-6"
               >
-                <div className="flex items-center justify-between px-2">
-                  <span className="text-sm font-medium text-muted-foreground">Apariencia</span>
+                <div className="flex items-center justify-between px-4 py-3 clay-card rounded-2xl">
+                  <span className="text-sm font-heading font-bold text-muted-foreground uppercase tracking-widest">Tema</span>
                   <ThemeToggle />
                 </div>
 
                 <Button
                   onClick={() => scrollToSection("contacto")}
-                  className="w-full rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 h-12 text-base font-semibold shadow-lg shadow-primary/20"
+                  className="w-full clay-button h-16 rounded-3xl text-sm font-heading font-black uppercase tracking-[0.2em]"
                 >
                   Solicitar información
                 </Button>

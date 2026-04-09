@@ -1,14 +1,14 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
 import { Check, TrendingUp, Users, Zap } from "lucide-react"
+import { motion, Variants } from "framer-motion"
 
 export function TeamSection() {
   const plans = [
     {
       name: "Emprendedor Inicial",
-      description: "Ideal para comenzar tu negocio de distribución",
+      description: "Ideal para comenzar tu negocio de distribución local",
       icon: Zap,
       features: [
         "Kit inicial de productos",
@@ -22,18 +22,18 @@ export function TeamSection() {
       highlight: false,
     },
     {
-      name: "Distribuidor Profesional",
-      description: "Para quienes buscan un negocio establecido",
+      name: "Distribuidor Pro",
+      description: "Para quienes buscan un negocio establecido y escalable",
       icon: TrendingUp,
       features: [
         "Kit completo de productos premium",
         "Capacitación presencial intensiva",
-        "Material promocional físico y digital",
+        "Material físico y digital",
         "Comisión del 20% por venta",
         "Soporte prioritario 24/7",
         "Territorio exclusivo asignado",
-        "Bonos por cumplimiento de metas",
-        "Acceso a eventos y conferencias",
+        "Bonos por cumplimiento",
+        "Acceso a eventos",
       ],
       investment: "Inversión media",
       highlight: true,
@@ -44,126 +44,157 @@ export function TeamSection() {
       icon: Users,
       features: [
         "Stock completo personalizado",
-        "Capacitación ejecutiva y técnica",
+        "Capacitación técnica avanzada",
         "Branding co-creado",
         "Comisión del 25% + bonos",
         "Gerente de cuenta dedicado",
-        "Múltiples territorios exclusivos",
-        "Participación en desarrollo de productos",
+        "Territorios exclusivos",
+        "Participación en I+D",
         "Acceso a datos de mercado",
-        "Inversión en marketing compartida",
       ],
       investment: "Inversión estratégica",
       highlight: false,
     },
   ]
 
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+      },
+    },
+  }
+
+  const itemVariants: Variants = {
+    hidden: { y: 30, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: "spring" as const,
+        stiffness: 100,
+        damping: 15,
+      },
+    },
+  }
+
   return (
-    <section id="equipo" className="relative py-12 md:py-16 px-4 overflow-hidden">
-      <div className="absolute inset-0 opacity-[0.03]">
-        <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <pattern id="hexagons" x="0" y="0" width="100" height="87" patternUnits="userSpaceOnUse">
-              <path
-                d="M25 0L50 14.43V43.3L25 57.74L0 43.3V14.43L25 0Z"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1"
-                className="text-primary"
-              />
-              <circle cx="25" cy="28.87" r="3" fill="currentColor" className="text-accent" />
-              <circle cx="50" cy="14.43" r="2" fill="currentColor" className="text-primary" />
-              <circle cx="0" cy="14.43" r="2" fill="currentColor" className="text-primary" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#hexagons)" />
-        </svg>
+    <section id="equipo" className="relative py-32 px-4 overflow-hidden bg-background">
+      {/* Background Decor */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full -z-10 pointer-events-none">
+        <div className="absolute top-[20%] left-[10%] w-[600px] h-[600px] bg-primary/5 blur-[140px] rounded-full" />
+        <div className="absolute bottom-[20%] right-[10%] w-[600px] h-[600px] bg-accent/5 blur-[140px] rounded-full" />
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="text-center mb-12 md:mb-16">
-          <div className="inline-flex items-center gap-2 px-3 md:px-4 py-2 rounded-full bg-primary/10 text-primary mb-4">
-            <Users className="w-4 h-4" />
-            <span className="text-xs md:text-sm font-medium">Únete al Equipo</span>
-          </div>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 px-4">
-            Construye tu Negocio con M.J.M
-          </h2>
-          <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
-            Forma parte de la revolución ecológica. Ofrecemos planes flexibles para emprendedores y profesionales que
-            quieran distribuir nuestros productos innovadores.
+        <div className="text-center mb-24">
+          <motion.div 
+            initial={{ opacity: 0, y: -10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="inline-flex items-center gap-3 px-6 py-3 rounded-2xl bg-primary/10 text-primary mb-6 shadow-inner"
+          >
+            <Users className="w-5 h-5" />
+            <span className="text-sm font-heading font-black uppercase tracking-widest leading-none">Oportunidad de Negocio</span>
+          </motion.div>
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="text-5xl md:text-7xl font-heading font-black text-foreground mb-8 leading-[0.9] tracking-tighter"
+          >
+            Construye tu futuro con <span className="text-primary italic">M.J.M</span>
+          </motion.h2>
+          <p className="text-xl md:text-2xl font-sans font-medium text-muted-foreground max-w-3xl mx-auto text-pretty">
+            Únete a la red líder en control ecológico. Ofrecemos modelos de negocio escalables para emprendedores que buscan resultados reales.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-12">
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20"
+        >
           {plans.map((plan, index) => {
             const Icon = plan.icon
             return (
-              <Card
-                key={index}
-                className={`p-5 md:p-6 relative overflow-hidden transition-all hover:shadow-xl flex flex-col shadow-inner backdrop-blur-sm backdrop-saturate-150 ${plan.highlight ? "border-2 border-primary bg-primary/5 md:scale-105" : "border border-border/50 bg-card/50"
+              <motion.div key={index} variants={itemVariants} className="h-full">
+                <div
+                  className={`clay-card h-full p-10 flex flex-col relative group transition-all duration-500 rounded-[3rem] ${
+                    plan.highlight ? "ring-4 ring-primary ring-offset-8 ring-offset-background" : ""
                   }`}
-              >
-                {plan.highlight && (
-                  <div className="self-end px-2 md:px-3 py-1 rounded-full bg-accent text-accent-foreground text-xs font-semibold mb-2">
-                    Más Popular
-                  </div>
-                )}
-
-                <div className="mb-4 md:mb-5">
-                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-3">
-                    <Icon className="w-5 h-5 md:w-6 md:h-6 text-primary" />
-                  </div>
-                  <h3 className="text-xl md:text-2xl font-bold text-foreground mb-2">{plan.name}</h3>
-                  <p className="text-muted-foreground text-sm mb-3">{plan.description}</p>
-                  <div className="text-primary font-semibold text-sm md:text-base">{plan.investment}</div>
-                </div>
-
-                <ul className="space-y-2 mb-5 md:mb-6 flex-grow">
-                  {plan.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-start gap-2">
-                      <Check className="w-4 h-4 md:w-5 md:h-5 text-accent flex-shrink-0 mt-0.5" />
-                      <span className="text-xs md:text-sm text-foreground">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <Button
-                  className={`w-full rounded-full h-10 md:h-11 text-sm md:text-base ${plan.highlight
-                    ? "bg-primary text-primary-foreground hover:bg-primary/90"
-                    : "bg-secondary text-secondary-foreground hover:bg-secondary/90"
-                    }`}
-                  onClick={() => {
-                    const element = document.getElementById("contacto")
-                    if (element) element.scrollIntoView({ behavior: "smooth" })
-                  }}
                 >
-                  Solicitar Información
-                </Button>
-              </Card>
+                  {plan.highlight && (
+                    <div className="absolute top-6 right-6 px-4 py-2 rounded-xl bg-accent text-accent-foreground text-[10px] font-heading font-black uppercase tracking-widest shadow-lg">
+                      Más Popular
+                    </div>
+                  )}
+
+                  <div className="mb-10">
+                    <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-8 shadow-inner group-hover:scale-110 transition-transform duration-500">
+                      <Icon className="w-8 h-8 text-primary" />
+                    </div>
+                    <h3 className="text-2xl md:text-3xl font-heading font-black text-foreground mb-3">{plan.name}</h3>
+                    <p className="text-muted-foreground font-sans font-medium mb-4 leading-relaxed">{plan.description}</p>
+                    <div className="text-primary font-heading font-black text-xl flex items-center gap-2">
+                       <span className="w-2 h-2 rounded-full bg-accent" />
+                       {plan.investment}
+                    </div>
+                  </div>
+
+                  <ul className="space-y-4 mb-10 flex-grow">
+                    {plan.features.map((feature, idx) => (
+                      <li key={idx} className="flex items-start gap-3">
+                        <div className="w-6 h-6 rounded-lg bg-green-500/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                          <Check className="w-4 h-4 text-green-600" />
+                        </div>
+                        <span className="font-sans font-medium text-foreground opacity-80">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <Button
+                    className={`clay-button w-full h-16 text-lg ${
+                      !plan.highlight ? "bg-secondary text-secondary-foreground hover:bg-secondary/90" : ""
+                    }`}
+                    onClick={() => {
+                      const element = document.getElementById("contacto")
+                      if (element) element.scrollIntoView({ behavior: "smooth" })
+                    }}
+                  >
+                    Solicitar Información
+                  </Button>
+                </div>
+              </motion.div>
             )
           })}
-        </div>
+        </motion.div>
 
-        <div className="text-center bg-gradient-to-br from-primary/10 via-accent/5 to-primary/10 rounded-2xl md:rounded-3xl p-8 md:p-12 border border-border/50 shadow-lg shadow-inner backdrop-blur-sm backdrop-saturate-150">
-          <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-3 md:mb-4 px-4">
-            ¿Tienes un plan personalizado en mente?
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          className="clay-card rounded-[3.5rem] p-12 md:p-20 text-center relative overflow-hidden group"
+        >
+          <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10" />
+          <h3 className="text-3xl md:text-5xl font-heading font-black text-foreground mb-6 max-w-2xl mx-auto leading-none tracking-tighter">
+            ¿Buscas un plan <span className="text-primary italic">personalizado</span>?
           </h3>
-          <p className="text-sm md:text-base text-muted-foreground mb-5 md:mb-6 max-w-2xl mx-auto px-4">
-            Cada negocio es único. Conversemos sobre cómo podemos crear un plan de distribución que se adapte
-            perfectamente a tus objetivos y recursos.
+          <p className="text-lg md:text-xl font-sans font-medium text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed">
+            Cada visión es distinta. Si tienes una propuesta de distribución a gran escala o necesidades especiales, hablemos directamente.
           </p>
           <Button
             size="lg"
-            className="rounded-full bg-primary text-primary-foreground hover:bg-primary/90 px-6 md:px-8 h-11 md:h-12 text-sm md:text-base w-full sm:w-auto"
+            className="clay-button px-12 py-8 text-xl h-auto"
             onClick={() => {
               const element = document.getElementById("contacto")
               if (element) element.scrollIntoView({ behavior: "smooth" })
             }}
           >
-            Agendar Reunión
+            Agendar Reunión Técnica
           </Button>
-        </div>
+        </motion.div>
       </div>
     </section>
   )

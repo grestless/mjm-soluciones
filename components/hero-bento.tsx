@@ -110,15 +110,19 @@ export function HeroBento() {
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
-        <ScrollReveal direction="up">
-          <div className="mb-12 md:mb-16 lg:mb-20">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-bold mb-6 md:mb-8 text-balance leading-tight">
-              Soluciones definitivas para plagas: Efectividad sin riesgos para tu hogar.
+        <div className="mb-16 md:mb-24 lg:mb-32">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-heading font-black mb-8 text-balance leading-[0.9] tracking-tighter">
+              Control de <span className="text-primary">plagas</span> profesional con <span className="text-accent text-glow italic">impacto real.</span>
             </h1>
-            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground max-w-4xl text-pretty leading-relaxed">
-              Productos no tóxicos, sin olor y con tecnología inteligente. De nuestra familia a la tuya.
+            <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-sans font-medium text-muted-foreground max-w-4xl text-pretty leading-snug mb-10">
+              Tecnología de vanguardia y fórmulas exclusivas. Protegemos lo que más importa con seriedad y efectividad certificada.
             </p>
-            <div className="flex flex-col sm:flex-row flex-wrap gap-3 md:gap-4 mt-6 md:mt-8">
+            <div className="flex flex-col sm:flex-row flex-wrap gap-5 mt-10">
               <a
                 href="https://wa.me/5493813321573"
                 target="_blank"
@@ -127,158 +131,146 @@ export function HeroBento() {
               >
                 <Button
                   size="lg"
-                  className="rounded-full bg-accent text-accent-foreground hover:bg-accent/90 text-base md:text-lg px-6 md:px-8 py-5 md:py-6 w-full"
+                  className="clay-button text-base md:text-xl px-10 py-8 w-full group"
                 >
-                  Contactar por WhatsApp
+                  <span className="flex items-center gap-2">
+                    Solicitar Presupuesto
+                    <TrendingUp className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                  </span>
                 </Button>
               </a>
               <Link href="/casos-de-exito" className="w-full sm:w-auto">
                 <Button
                   size="lg"
                   variant="outline"
-                  className="rounded-full border-primary text-primary hover:bg-primary hover:text-primary-foreground text-base md:text-lg px-6 md:px-8 py-5 md:py-6 bg-transparent w-full"
+                  className="rounded-2xl border-2 border-primary/20 text-primary hover:bg-primary/5 text-base md:text-xl px-10 py-8 bg-transparent w-full font-heading font-bold"
                 >
-                  Ver casos de éxito
+                  Ver resultados
                 </Button>
               </Link>
             </div>
-          </div>
-        </ScrollReveal>
+          </motion.div>
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6">
-          {/* PRIMERA FILA: 6 + 6 columnas */}
-
-          {/* Tarjeta 1: Fórmula exclusiva - 6 columnas */}
-          <div className="md:col-span-6">
-            <ScrollReveal direction="left" delay={100}>
-              <Card className="bg-gradient-to-br from-accent/10 to-primary/5 border-accent/20 p-6 md:p-8 flex flex-col justify-between h-full min-h-[300px] md:min-h-[350px] shadow-lg shadow-inner backdrop-blur-sm backdrop-saturate-150 hover:shadow-xl transition-all">
-                <div>
-                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-accent/20 flex items-center justify-center mb-3 md:mb-4">
-                    <Beaker className="w-5 h-5 md:w-6 md:h-6 text-accent" />
-                  </div>
-                  <h2 id="formula" className="text-2xl md:text-3xl font-bold mb-3 md:mb-4 text-balance">
-                    Fórmula exclusiva desarrollada en laboratorio
-                  </h2>
-                  <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
-                    Combinamos investigación química y responsabilidad ecológica para lograr un insecticida efectivo sin
-                    impacto ambiental. Certificado y probado en campo.
-                  </p>
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8">
+          {/* Tarjeta 1: Fórmula exclusiva */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="md:col-span-12 lg:col-span-7"
+          >
+            <div className="clay-card rounded-[2.5rem] p-8 md:p-12 flex flex-col md:flex-row gap-8 items-center h-full group">
+              <div className="flex-1">
+                <div className="w-14 h-14 rounded-2xl bg-accent/20 flex items-center justify-center mb-6 group-hover:rotate-12 transition-transform">
+                  <Beaker className="w-7 h-7 text-accent" />
                 </div>
-                <div className="mt-4 md:mt-6">
-                  <Link href="/#productos" className="w-full sm:w-auto">
-                    <Button className="rounded-full bg-accent text-accent-foreground hover:bg-accent/90 w-full sm:w-auto">
-                      Conocer productos
-                    </Button>
-                  </Link>
-                </div>
-              </Card>
-            </ScrollReveal>
-          </div>
+                <h2 className="text-3xl md:text-4xl font-heading font-black mb-6 leading-tight">
+                  Fórmula de <span className="text-primary underline decoration-accent/30 underline-offset-8">laboratorio</span> propia
+                </h2>
+                <p className="text-muted-foreground text-lg md:text-xl leading-relaxed mb-8">
+                  No somos solo aplicadores. Desarrollamos soluciones químicas de alta fidelidad que garantizan la eliminación total sin comprometer la salud de tu entorno.
+                </p>
+                <Link href="/#productos">
+                  <Button variant="link" className="p-0 h-auto text-primary font-bold text-lg group/btn">
+                    Explorar catálogo 
+                    <CheckCircle2 className="ml-2 w-5 h-5 group-hover/btn:scale-110 transition-transform" />
+                  </Button>
+                </Link>
+              </div>
+              <div className="w-full md:w-1/3 aspect-square relative">
+                <div className="absolute inset-0 bg-accent/10 rounded-full blur-3xl animate-pulse" />
+                <img
+                  src="/api/placeholder/400/400"
+                  alt="Laboratory bottle"
+                  className="relative z-10 w-full h-full object-contain mix-blend-multiply opacity-80"
+                />
+              </div>
+            </div>
+          </motion.div>
 
-          {/* Tarjeta 2: Imagen del producto - 6 columnas */}
-          <div className="md:col-span-6">
-            <ScrollReveal direction="right" delay={200}>
-              <Card className="bg-primary/5 border-primary/20 overflow-hidden relative shadow-lg shadow-inner backdrop-blur-sm backdrop-saturate-150 hover:shadow-xl transition-all h-full min-h-[300px] md:min-h-[350px]">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <img
-                    src="/images/design-mode/producto2.png"
-                    alt="Productos M.J.M - Veneno para Cucarachas y Ratas"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6 bg-gradient-to-t from-primary/90 to-transparent">
-                  <p className="text-primary-foreground font-semibold text-base md:text-lg">
-                    Productos M.J.M - Venenos profesionales certificados
-                  </p>
-                </div>
-              </Card>
-            </ScrollReveal>
-          </div>
-
-          {/* SEGUNDA FILA: 4 + 4 + 4 columnas */}
-
-          {/* Tarjeta 3: Eficacia comprobada - 4 columnas */}
-          <div className="md:col-span-6 lg:col-span-4">
-            <ScrollReveal direction="left" delay={100}>
-              <Card className="bg-gradient-to-br from-secondary/5 to-accent/5 border-secondary/20 p-4 md:p-5 flex flex-col justify-between h-full min-h-[280px] md:min-h-[320px] shadow-lg shadow-inner backdrop-blur-sm backdrop-saturate-150 hover:shadow-xl transition-all">
-                <div>
-                  <div className="w-9 h-9 md:w-10 md:h-10 rounded-xl bg-secondary/20 flex items-center justify-center mb-2 md:mb-3">
-                    <TrendingUp className="w-4 h-4 md:w-5 md:h-5 text-secondary-foreground" />
-                  </div>
-                  <h3 className="text-lg md:text-xl font-bold mb-3 md:mb-4">Eficacia comprobada</h3>
-                  <div className="space-y-2 md:space-y-3">
-                    <div>
-                      <div className="text-2xl md:text-3xl font-bold text-accent">
-                        <Counter value={98} suffix="%" />
-                      </div>
-                      <p className="text-xs text-muted-foreground">Eliminación de plagas</p>
+          {/* Tarjeta 2: Métricas */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="md:col-span-6 lg:col-span-5"
+          >
+            <div className="clay-card rounded-[2.5rem] p-8 md:p-10 flex flex-col justify-between h-full bg-primary text-primary-foreground overflow-hidden relative">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-accent/20 blur-3xl rounded-full -mr-16 -mt-16" />
+              <div>
+                <h3 className="text-xl font-heading font-bold uppercase tracking-[0.2em] mb-8 opacity-70">Rendimiento</h3>
+                <div className="grid gap-8">
+                  <div>
+                    <div className="text-6xl md:text-7xl font-heading font-black text-accent flex items-baseline gap-2">
+                      <Counter value={99} suffix="%" />
                     </div>
+                    <p className="text-lg font-bold opacity-80 uppercase tracking-widest mt-2">Efectividad</p>
+                  </div>
+                  <div className="h-px bg-white/10 w-full" />
+                  <div className="flex justify-between items-end">
                     <div>
-                      <div className="text-2xl md:text-3xl font-bold text-primary">
+                      <div className="text-4xl font-heading font-black text-white flex items-baseline gap-1">
                         <Counter value={100} suffix="%" />
                       </div>
-                      <p className="text-xs text-muted-foreground">Biodegradable</p>
+                      <p className="text-sm opacity-60 uppercase font-bold mt-1">Sustentable</p>
                     </div>
-                    <div>
-                      <div className="text-2xl md:text-3xl font-bold text-secondary">
+                    <div className="text-right">
+                      <div className="text-4xl font-heading font-black text-white flex items-baseline gap-1">
                         <Counter value={24} suffix="h" />
                       </div>
-                      <p className="text-xs text-muted-foreground">Acción rápida</p>
+                      <p className="text-sm opacity-60 uppercase font-bold mt-1">Acción</p>
                     </div>
                   </div>
                 </div>
-              </Card>
-            </ScrollReveal>
-          </div>
+              </div>
+            </div>
+          </motion.div>
 
-          {/* Tarjeta 4: Aplicaciones versátiles - 4 columnas */}
-          <div className="md:col-span-6 lg:col-span-4">
-            <ScrollReveal direction="scale" delay={200}>
-              <Card className="bg-primary/5 border-primary/20 p-5 md:p-6 shadow-lg shadow-inner backdrop-blur-sm backdrop-saturate-150 hover:shadow-xl transition-all h-full min-h-[280px] md:min-h-[320px] flex flex-col justify-between">
-                <div>
-                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-primary/20 flex items-center justify-center mb-3 md:mb-4">
-                    <Shield className="w-5 h-5 md:w-6 md:h-6 text-primary" />
-                  </div>
-                  <h3 className="text-lg md:text-xl font-bold mb-3 md:mb-4">Aplicaciones versátiles</h3>
-                  <div className="space-y-2 md:space-y-3">
-                    <div className="flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 md:w-5 md:h-5 text-accent flex-shrink-0" />
-                      <span className="text-xs md:text-sm">Uso agrícola profesional</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 md:w-5 md:h-5 text-accent flex-shrink-0" />
-                      <span className="text-xs md:text-sm">Horticultura y viveros</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 md:w-5 md:h-5 text-accent flex-shrink-0" />
-                      <span className="text-xs md:text-sm">Limpieza industrial</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 md:w-5 md:h-5 text-accent flex-shrink-0" />
-                      <span className="text-xs md:text-sm">Uso domiciliario seguro</span>
-                    </div>
-                  </div>
-                </div>
-              </Card>
-            </ScrollReveal>
-          </div>
+          {/* Tarjeta 3: Certificado Ecológico */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3 }}
+            className="md:col-span-6 lg:col-span-4"
+          >
+            <div className="clay-card rounded-[2.5rem] p-8 flex flex-col items-center text-center h-full group hover:bg-accent/5 transition-colors">
+              <div className="w-20 h-20 rounded-3xl bg-primary/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <Leaf className="w-10 h-10 text-primary" />
+              </div>
+              <h3 className="text-2xl font-heading font-black mb-4">Compromiso <br/>Ecológico</h3>
+              <p className="text-muted-foreground text-lg leading-snug">
+                Nuestros procesos respetan la biodiversidad. Controlamos plagas, no el ecosistema.
+              </p>
+            </div>
+          </motion.div>
 
-          {/* Tarjeta 5: Certificado ecológico - 4 columnas */}
-          <div className="md:col-span-12 lg:col-span-4">
-            <ScrollReveal direction="right" delay={300}>
-              <Card className="bg-gradient-to-br from-primary/10 via-accent/10 to-primary/5 border-primary/20 p-5 md:p-6 flex flex-col items-center justify-center text-center shadow-lg shadow-inner backdrop-blur-sm backdrop-saturate-150 hover:shadow-xl transition-all h-full min-h-[280px] md:min-h-[320px]">
-                <div>
-                  <div className="w-12 h-12 md:w-16 md:h-16 rounded-2xl bg-primary/20 flex items-center justify-center mb-3 md:mb-4 mx-auto">
-                    <Leaf className="w-6 h-6 md:w-8 md:h-8 text-primary" />
-                  </div>
-                  <h3 className="text-xl md:text-2xl font-bold mb-2 md:mb-3">Certificado ecológico</h3>
-                  <p className="text-sm md:text-base text-muted-foreground">
-                    Cumple con todas las normativas ambientales y de seguridad. Trazabilidad completa del proceso.
-                  </p>
+          {/* Tarjeta 4: Imagen Producto Principal */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4 }}
+            className="md:col-span-12 lg:col-span-8"
+          >
+            <div className="clay-card rounded-[2.5rem] h-full min-h-[400px] overflow-hidden relative group">
+              <img
+                src="/images/design-mode/producto2.png"
+                alt="Productos M.J.M"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/20 to-transparent p-10 flex flex-col justify-end">
+                <div className="flex items-center gap-4">
+                  <div className="h-px flex-1 bg-white/30" />
+                  <span className="text-white font-heading font-black uppercase text-sm tracking-[0.3em]">Producto Certificado</span>
+                  <div className="h-px flex-1 bg-white/30" />
                 </div>
-              </Card>
-            </ScrollReveal>
-          </div>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>

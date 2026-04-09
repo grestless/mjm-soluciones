@@ -1,13 +1,12 @@
 "use client"
 
 import type React from "react"
-
-import { Card } from "@/components/ui/card"
+import { useState } from "react"
+import { motion } from "framer-motion"
+import { Mail, Phone, MapPin, Send, CheckCircle2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { Mail, Phone, MapPin, Send, CheckCircle2, AlertCircle } from "lucide-react"
-import { useState } from "react"
 
 export function ContactSection() {
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -33,7 +32,6 @@ export function ContactSection() {
       if (response.ok) {
         setSubmitStatus("success")
         form.reset()
-        // Reset success message after 5 seconds
         setTimeout(() => setSubmitStatus("idle"), 5000)
       } else {
         setSubmitStatus("error")
@@ -46,216 +44,163 @@ export function ContactSection() {
   }
 
   return (
-    <section id="contacto" className="py-16 md:py-20 lg:py-24 px-4 bg-gradient-to-b from-background to-muted/30 relative overflow-hidden">
-      <div className="absolute inset-0 opacity-30 dark:opacity-10">
-        <svg
-          className="w-full h-full"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 1440 800"
-          preserveAspectRatio="xMidYMid slice"
-        >
-          <defs>
-            <linearGradient id="wave-gradient-1" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#0D4D4D" />
-              <stop offset="100%" stopColor="#6B9F3E" />
-            </linearGradient>
-            <linearGradient id="wave-gradient-2" x1="100%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#8BC34A" />
-              <stop offset="100%" stopColor="#4CAF50" />
-            </linearGradient>
-          </defs>
-
-          {/* Onda superior */}
-          <path
-            d="M0,160 C320,100 420,200 720,180 C1020,160 1120,100 1440,140 L1440,0 L0,0 Z"
-            fill="url(#wave-gradient-1)"
-            opacity="0.4"
-          />
-
-          {/* Onda media */}
-          <path
-            d="M0,320 C360,280 480,360 840,340 C1200,320 1320,280 1440,300 L1440,0 L0,0 Z"
-            fill="url(#wave-gradient-1)"
-            opacity="0.3"
-          />
-
-          {/* Onda inferior */}
-          <path
-            d="M0,640 C320,700 520,600 840,620 C1160,640 1280,700 1440,660 L1440,800 L0,800 Z"
-            fill="url(#wave-gradient-2)"
-            opacity="0.35"
-          />
-
-          {/* Onda de fondo */}
-          <path
-            d="M0,480 C400,520 600,440 960,460 C1320,480 1400,540 1440,500 L1440,800 L0,800 Z"
-            fill="url(#wave-gradient-2)"
-            opacity="0.25"
-          />
-        </svg>
+    <section id="contacto" className="py-32 px-4 bg-background relative overflow-hidden">
+      {/* Mesh Gradients Decor */}
+      <div className="absolute top-0 left-0 w-full h-full -z-10 pointer-events-none">
+        <div className="absolute top-[10%] left-[5%] w-[500px] h-[500px] bg-primary/5 blur-[120px] rounded-full animate-pulse" />
+        <div className="absolute bottom-[10%] right-[5%] w-[500px] h-[500px] bg-accent/5 blur-[120px] rounded-full" />
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-balance">
-            M.J.M tiene la solución a tus problemas de plagas
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto text-pretty">
-            Nuestro equipo técnico te asesorará para encontrar la solución ideal
+        <div className="text-center mb-24 max-w-4xl mx-auto">
+          <motion.span 
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            className="text-primary font-heading font-black uppercase tracking-[0.4em] text-xs mb-6 block"
+          >
+            Hablemos de Soluciones
+          </motion.span>
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="text-5xl md:text-7xl font-heading font-black mb-8 leading-[0.9] tracking-tighter"
+          >
+            M.J.M es la <span className="text-primary italic">respuesta final</span> a tus problemas de plagas.
+          </motion.h2>
+          <p className="text-xl md:text-2xl font-sans font-medium text-muted-foreground text-pretty max-w-2xl mx-auto">
+            Asesoramiento técnico especializado para hogares, comercios e industrias.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <Card className="p-8 border-primary/20 shadow-xl shadow-inner bg-card/80 backdrop-blur-sm backdrop-saturate-150">
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label className="text-sm font-semibold text-foreground/90">Nombre completo</label>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+          {/* Formulario */}
+          <motion.div 
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="lg:col-span-7"
+          >
+            <div className="clay-card rounded-[2.5rem] p-8 md:p-12">
+              <form onSubmit={handleSubmit} className="space-y-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div className="space-y-3">
+                    <label className="text-sm font-heading font-black uppercase tracking-widest text-primary/60 ml-2">Nombre completo</label>
+                    <Input
+                      name="nombre"
+                      placeholder="Ej: Juan Pérez"
+                      required
+                      className="h-14 rounded-2xl border-primary/5 bg-background shadow-inner focus:ring-primary/20 focus:border-primary/30 transition-all font-medium"
+                    />
+                  </div>
+                  <div className="space-y-3">
+                    <label className="text-sm font-heading font-black uppercase tracking-widest text-primary/60 ml-2">Empresa <span className="text-[10px] lowercase opacity-50">(Opcional)</span></label>
+                    <Input
+                      name="empresa"
+                      placeholder="Tu negocio o industria"
+                      className="h-14 rounded-2xl border-primary/5 bg-background shadow-inner focus:ring-primary/20 focus:border-primary/30 transition-all font-medium"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  <label className="text-sm font-heading font-black uppercase tracking-widest text-primary/60 ml-2">Correo de contacto</label>
                   <Input
-                    name="nombre"
-                    placeholder="Juan Pérez"
+                    type="email"
+                    name="email"
+                    placeholder="ejemplo@correo.com"
                     required
-                    className="h-12 border-primary/20 focus:border-primary focus:ring-primary/20 transition-all"
+                    className="h-14 rounded-2xl border-primary/5 bg-background shadow-inner focus:ring-primary/20 focus:border-primary/30 transition-all font-medium"
                   />
                 </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-semibold text-foreground/90">Empresa</label>
-                  <Input
-                    name="empresa"
-                    placeholder="Tu empresa"
-                    className="h-12 border-primary/20 focus:border-primary focus:ring-primary/20 transition-all"
+
+                <div className="space-y-3">
+                  <label className="text-sm font-heading font-black uppercase tracking-widest text-primary/60 ml-2">Mensaje o Consulta</label>
+                  <Textarea
+                    name="mensaje"
+                    placeholder="¿En qué podemos ayudarte hoy?"
+                    required
+                    className="min-h-[160px] rounded-3xl border-primary/5 bg-background shadow-inner focus:ring-primary/20 focus:border-primary/30 transition-all font-medium resize-none p-6"
                   />
                 </div>
-              </div>
 
-              <div className="space-y-2">
-                <label className="text-sm font-semibold text-foreground/90">Correo electrónico</label>
-                <Input
-                  type="email"
-                  name="email"
-                  placeholder="tu@email.com"
-                  required
-                  className="h-12 border-primary/20 focus:border-primary focus:ring-primary/20 transition-all"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-sm font-semibold text-foreground/90">Teléfono</label>
-                <Input
-                  type="tel"
-                  name="telefono"
-                  placeholder="+54 9 11 1234-5678"
-                  className="h-12 border-primary/20 focus:border-primary focus:ring-primary/20 transition-all"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-sm font-semibold text-foreground/90">Mensaje</label>
-                <Textarea
-                  name="mensaje"
-                  placeholder="Cuéntanos sobre tu necesidad o consulta..."
-                  required
-                  className="min-h-[140px] border-primary/20 focus:border-primary focus:ring-primary/20 transition-all resize-none"
-                />
-              </div>
-
-              {submitStatus === "success" && (
-                <div className="flex items-center gap-2 p-4 bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800 rounded-lg">
-                  <CheckCircle2 className="w-5 h-5 text-green-600 dark:text-green-400 flex-shrink-0" />
-                  <p className="text-sm text-green-800 dark:text-green-300 font-medium">
-                    ¡Mensaje enviado con éxito! Te responderemos pronto.
-                  </p>
-                </div>
-              )}
-
-              {submitStatus === "error" && (
-                <div className="flex items-center gap-2 p-4 bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded-lg">
-                  <AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400 flex-shrink-0" />
-                  <p className="text-sm text-red-800 dark:text-red-300 font-medium">
-                    Hubo un error al enviar el mensaje. Por favor, intenta nuevamente.
-                  </p>
-                </div>
-              )}
-
-              <Button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full h-12 rounded-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-base shadow-lg hover:shadow-xl transition-all hover:scale-[1.02] group disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
-              >
-                {isSubmitting ? (
-                  <>
-                    <div className="w-5 h-5 mr-2 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
-                    Enviando...
-                  </>
-                ) : (
-                  <>
-                    <Send className="w-5 h-5 mr-2 group-hover:translate-x-1 transition-transform" />
-                    Enviar solicitud
-                  </>
+                {submitStatus === "success" && (
+                  <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="flex items-center gap-3 p-5 bg-green-500/10 border border-green-500/20 rounded-2xl">
+                    <CheckCircle2 className="w-6 h-6 text-green-500 flex-shrink-0" />
+                    <p className="text-sm text-green-800 dark:text-green-300 font-bold">
+                      ¡Recibido! Nos pondremos en contacto en breve.
+                    </p>
+                  </motion.div>
                 )}
-              </Button>
 
-              <p className="text-xs text-center text-muted-foreground">
-                Responderemos tu consulta en menos de 24 horas hábiles
+                <Button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="clay-button w-full h-16 text-lg group"
+                >
+                  {isSubmitting ? "Procesando..." : (
+                    <span className="flex items-center gap-3">
+                      Enviar Solicitud
+                      <Send className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                    </span>
+                  )}
+                </Button>
+              </form>
+            </div>
+          </motion.div>
+
+          {/* Info Side */}
+          <motion.div 
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="lg:col-span-5 space-y-8"
+          >
+            <div className="clay-card rounded-[2.5rem] p-8 flex items-start gap-6 group hover:bg-accent/5 transition-colors">
+              <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center flex-shrink-0 shadow-inner group-hover:rotate-6 transition-transform">
+                <Mail className="w-8 h-8 text-primary" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <h3 className="font-heading font-black text-xl mb-2 text-primary">Canales Digitales</h3>
+                <p className="text-muted-foreground font-medium break-words text-lg">contacto@mjmsoluciones.com</p>
+                <p className="text-muted-foreground font-medium break-words text-lg">ventas@mjmsoluciones.com</p>
+              </div>
+            </div>
+
+            <div className="clay-card rounded-[2.5rem] p-8 flex items-start gap-6 group hover:bg-accent/5 transition-colors">
+              <div className="w-16 h-16 rounded-2xl bg-accent/10 flex items-center justify-center flex-shrink-0 shadow-inner group-hover:-rotate-6 transition-transform">
+                <Phone className="w-8 h-8 text-accent" />
+              </div>
+              <div>
+                <h3 className="font-heading font-black text-xl mb-2 text-accent-foreground">Atención Directa</h3>
+                <p className="text-muted-foreground font-medium text-lg">+54 9 381 332-1573</p>
+                <p className="text-muted-foreground font-medium text-lg">+54 9 381 600-0639</p>
+                <p className="text-xs font-bold uppercase tracking-widest text-primary mt-3 opacity-60">Lunes a Viernes: 9:00 - 18:00 hs</p>
+              </div>
+            </div>
+
+            <div className="clay-card rounded-[2.5rem] p-8 flex items-start gap-6 group hover:bg-accent/5 transition-colors">
+              <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center flex-shrink-0 shadow-inner group-hover:scale-105 transition-transform">
+                <MapPin className="w-8 h-8 text-primary" />
+              </div>
+              <div>
+                <h3 className="font-heading font-black text-xl mb-2 text-primary">Presencia Territorial</h3>
+                <p className="text-muted-foreground font-medium text-lg">Tucumán, Argentina</p>
+                <p className="text-sm font-bold opacity-60 uppercase tracking-widest mt-2">Logística nacional e internacional</p>
+              </div>
+            </div>
+
+            <div className="clay-card rounded-[2.5rem] p-10 bg-primary text-primary-foreground relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 blur-3xl rounded-full -mr-16 -mt-16" />
+              <h3 className="font-heading font-black text-2xl mb-4 relative z-10">M.J.M es Garantía</h3>
+              <p className="font-sans font-medium text-primary-foreground/80 leading-relaxed text-lg relative z-10">
+                Cada solución está respaldada por años de investigación y éxito en el campo. Tecnología limpia y resultados reales.
               </p>
-            </form>
-          </Card>
-
-          {/* Información de contacto */}
-          <div className="space-y-6">
-            <Card className="p-6 border-primary/20 hover:border-primary/30 transition-all hover:shadow-lg shadow-inner bg-card/80 backdrop-blur-sm backdrop-saturate-150">
-              <div className="flex items-start gap-4">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center flex-shrink-0 shadow-sm">
-                  <Mail className="w-7 h-7 text-primary" />
-                </div>
-                <div className="min-w-0 flex-1">
-                  <h3 className="font-bold text-lg mb-2">Email</h3>
-                  <p className="text-muted-foreground font-medium break-words text-sm md:text-base">
-                    contacto@mjmsoluciones.com
-                  </p>
-                  <p className="text-muted-foreground font-medium break-words text-sm md:text-base">
-                    ventas@mjmsoluciones.com
-                  </p>
-                </div>
+              <div className="mt-6 flex items-center gap-2 opacity-50 font-heading font-black uppercase text-[10px] tracking-widest">
+                <span>Hecho en Argentina</span>
+                <div className="h-px flex-1 bg-white/20" />
               </div>
-            </Card>
-
-            <Card className="p-6 border-accent/20 hover:border-accent/30 transition-all hover:shadow-lg shadow-inner bg-card/80 backdrop-blur-sm backdrop-saturate-150">
-              <div className="flex items-start gap-4">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-accent/20 to-accent/10 flex items-center justify-center flex-shrink-0 shadow-sm">
-                  <Phone className="w-7 h-7 text-accent" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-lg mb-2">Teléfono</h3>
-                  <p className="text-muted-foreground font-medium">+54 9 381 332-1573</p>
-                  <p className="text-muted-foreground font-medium">+54 9 381 600-0639</p>
-                  <p className="text-sm text-muted-foreground mt-1">Lun - Vie: 9:00 - 18:00 hs</p>
-                </div>
-              </div>
-            </Card>
-
-            <Card className="p-6 border-secondary/20 hover:border-secondary/30 transition-all hover:shadow-lg shadow-inner bg-card/80 backdrop-blur-sm backdrop-saturate-150">
-              <div className="flex items-start gap-4">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-secondary/20 to-secondary/10 flex items-center justify-center flex-shrink-0 shadow-sm">
-                  <MapPin className="w-7 h-7 text-secondary-foreground" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-lg mb-2">Ubicación</h3>
-                  <p className="text-muted-foreground font-medium">Tucumán, Argentina</p>
-                  <p className="text-sm text-muted-foreground mt-1">Distribución nacional e internacional</p>
-                </div>
-              </div>
-            </Card>
-
-            <Card className="p-6 bg-gradient-to-br from-primary/10 via-primary/5 to-accent/5 border-primary/20 shadow-lg shadow-inner backdrop-blur-sm backdrop-saturate-150">
-              <h3 className="font-bold text-lg mb-3 text-primary">Compromiso de calidad M.J.M</h3>
-              <p className="text-sm text-foreground/80 leading-relaxed">
-                Cada producto de M.J.M Soluciones Ecológicas está diseñado para cuidar lo que importa: la salud, el
-                entorno y los resultados. Tecnología limpia respaldada por ciencia.
-              </p>
-              <p className="text-sm text-foreground/80 mt-2">Fabricado en Tucumán, Argentina.</p>
-            </Card>
-          </div>
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>

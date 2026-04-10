@@ -40,7 +40,7 @@ export function HeroSection() {
   const lenis = useLenis();
 
   return (
-    <div className="relative w-full bg-zinc-950 text-white overflow-hidden font-sans min-h-screen flex flex-col justify-center">
+    <div id="inicio" className="relative w-full bg-zinc-950 text-white overflow-hidden font-sans min-h-screen flex flex-col justify-center">
       {/* 
         SCOPED ANIMATIONS 
       */}

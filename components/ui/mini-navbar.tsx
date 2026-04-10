@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import { Button } from "@/components/ui/button";
@@ -32,22 +32,47 @@ export function Navbar() {
   const router = useRouter();
   const pathname = usePathname();
 
-  const scrollToSection = (sectionId: string) => {
-    if (pathname === "/") {
-      const element = document.getElementById(sectionId)
-      if (element) {
-        if (lenis) {
-          lenis.scrollTo(element)
-        } else {
-          element.scrollIntoView({ behavior: "smooth" })
+  // Handle hash scrolling after navigation (e.g. from /quienes-somos to /#beneficios)
+  useEffect(() => {
+    const hash = window.location.hash.replace('#', '');
+    if (hash && pathname === '/') {
+      // Wait for page to render and Lenis to initialize
+      const timeout = setTimeout(() => {
+        const element = document.getElementById(hash);
+        if (element) {
+          if (lenis) {
+            lenis.scrollTo(element, { offset: -80 });
+          } else {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }
+          // Clean up the hash from URL
+          window.history.replaceState(null, '', '/');
         }
-        setIsOpen(false)
-      }
-    } else {
-      router.push(`/#${sectionId}`)
-      setIsOpen(false)
+      }, 400);
+      return () => clearTimeout(timeout);
     }
-  }
+  }, [pathname, lenis]);
+
+  const scrollToSection = useCallback((sectionId: string) => {
+    // Close menu first — this also restarts Lenis via the isOpen effect
+    setIsOpen(false);
+
+    if (pathname === "/") {
+      // Delay scroll so menu close animation + Lenis restart can complete
+      setTimeout(() => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          if (lenis) {
+            lenis.scrollTo(element, { offset: -80 });
+          } else {
+            element.scrollIntoView({ behavior: "smooth" });
+          }
+        }
+      }, 350);
+    } else {
+      router.push(`/#${sectionId}`);
+    }
+  }, [pathname, lenis, router]);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);

@@ -10,12 +10,15 @@ export default function SuccessStoriesPage() {
             <FloatingNav />
 
             <div className="pt-32 pb-16 px-4">
-                <div className="max-w-7xl mx-auto text-center mb-12">
+                <div className="max-w-7xl mx-auto text-left md:text-center mb-20 md:mb-32">
                     <ScrollReveal direction="up">
-                        <h1 className="text-4xl md:text-6xl font-bold mb-6 text-balance">
-                            Historias de <span className="text-accent">Éxito</span>
+                        <span className="text-primary font-heading font-black uppercase tracking-[0.3em] text-sm mb-4 block">
+                            Experiencias
+                        </span>
+                        <h1 className="text-5xl md:text-7xl font-heading font-black mb-8 text-balance leading-[1.1] tracking-tighter">
+                            Historias de <span className="text-primary underline decoration-accent/30 underline-offset-8">Éxito</span>
                         </h1>
-                        <p className="text-xl text-muted-foreground max-w-2xl mx-auto text-pretty">
+                        <p className="text-xl md:text-2xl font-sans font-medium text-muted-foreground text-pretty max-w-3xl mx-auto leading-relaxed">
                             Descubre cómo hemos ayudado a nuestros clientes a recuperar la tranquilidad y seguridad en sus espacios.
                         </p>
                     </ScrollReveal>

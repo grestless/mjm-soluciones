@@ -53,14 +53,14 @@ export function ContactSection() {
 
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-24 max-w-4xl mx-auto">
-          <motion.span 
+          <motion.span
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             className="text-primary font-heading font-black uppercase tracking-[0.4em] text-xs mb-6 block"
           >
             Hablemos de Soluciones
           </motion.span>
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             className="text-5xl md:text-7xl font-heading font-black mb-8 leading-[0.9] tracking-tighter"
@@ -74,7 +74,7 @@ export function ContactSection() {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           {/* Formulario */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -149,7 +149,7 @@ export function ContactSection() {
           </motion.div>
 
           {/* Info Side */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -171,7 +171,7 @@ export function ContactSection() {
                 <Phone className="w-8 h-8 text-accent" />
               </div>
               <div>
-                <h3 className="font-heading font-black text-xl mb-2 text-accent-foreground">Atención Directa</h3>
+                <h3 className="font-heading font-black text-xl mb-2 text-primary">Atención Directa</h3>
                 <p className="text-muted-foreground font-medium text-lg">+54 9 381 332-1573</p>
                 <p className="text-muted-foreground font-medium text-lg">+54 9 381 600-0639</p>
                 <p className="text-xs font-bold uppercase tracking-widest text-primary mt-3 opacity-60">Lunes a Viernes: 9:00 - 18:00 hs</p>

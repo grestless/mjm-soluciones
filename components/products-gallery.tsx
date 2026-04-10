@@ -1,7 +1,8 @@
 "use client"
 
-import { Sparkles } from "lucide-react"
+import { Card, CardContent } from "@/components/ui/card"
 import { motion, Variants } from "framer-motion"
+import Image from "next/image"
 
 const products = [
   {
@@ -59,87 +60,69 @@ export function ProductsGallery() {
       y: 0,
       opacity: 1,
       transition: {
-        type: "spring" as const,
-        stiffness: 100,
-        damping: 15,
+        duration: 0.5,
+        ease: "easeOut",
       },
     },
   }
 
   return (
-    <section id="productos" className="py-32 px-4 bg-background relative overflow-hidden">
-      <div className="absolute top-0 left-0 w-full h-full -z-10 pointer-events-none opacity-20">
-        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-primary/10 blur-[150px] rounded-full" />
-      </div>
-
+    <section id="productos" className="py-24 px-4 bg-background">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-24 max-w-3xl mx-auto">
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            className="inline-flex items-center gap-3 px-6 py-3 rounded-2xl bg-accent/10 border border-accent/20 mb-6 shadow-inner"
-          >
-            <Sparkles className="w-5 h-5 text-accent" />
-            <span className="text-sm font-heading font-black uppercase tracking-widest text-accent-foreground leading-none">Catálogo Destacado</span>
-          </motion.div>
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
+        <div className="text-center mb-16 max-w-3xl mx-auto">
+          <motion.span
+            initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-7xl font-heading font-black text-foreground mb-8 leading-[0.9] tracking-tighter"
+            viewport={{ once: true }}
+            className="text-primary font-heading font-bold uppercase tracking-[0.2em] text-sm mb-4 block"
           >
-            Fórmulas <span className="text-primary italic">certificadas</span> de alta eficiencia.
+            Catálogo Destacado
+          </motion.span>
+          <motion.h2
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-4xl md:text-5xl font-heading font-black text-foreground tracking-tight mb-6"
+          >
+            Fórmulas certificadas de alta eficiencia
           </motion.h2>
-          <p className="text-xl md:text-2xl font-sans font-medium text-muted-foreground text-pretty">
-            Productos con certificación SENASA fabricados con tecnología de punta en Tucumán, Argentina.
+          <p className="text-lg text-muted-foreground">
+            Nuestros productos cuentan con <span className="font-bold text-foreground">Certificación SENASA 847</span>. Fabricados con tecnología de punta en Tucumán, Argentina, garantizando eficacia y seguridad en su aplicación.
           </p>
         </div>
 
-        <motion.div 
+        <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
           {products.map((product) => (
             <motion.div key={product.id} variants={itemVariants}>
-              <div className="clay-card rounded-[3rem] p-6 group cursor-pointer transition-all duration-500 hover:-translate-y-2">
-                <div className="relative aspect-square overflow-hidden rounded-[2rem] bg-white shadow-inner mb-6">
-                  <img
+              <Card className="group overflow-hidden bg-card border-border hover:shadow-lg hover:border-primary/20 transition-all duration-300 !py-0 !gap-0">
+                <CardContent className="p-0 relative aspect-[4/3] overflow-hidden">
+                  <Image
                     src={product.image || "/placeholder.svg"}
                     alt={product.name}
-                    className="w-full h-full object-contain p-8 group-hover:scale-110 transition-transform duration-700"
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute top-4 right-4 px-4 py-2 bg-primary/90 text-primary-foreground text-[10px] font-heading font-black uppercase tracking-widest rounded-xl opacity-0 group-hover:opacity-100 transition-opacity">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent pointer-events-none" />
+                  <div className="absolute top-4 right-4 px-3 py-1 bg-background/95 shadow-sm border border-border text-foreground text-[10px] font-bold uppercase tracking-wider rounded-md">
                     {product.category}
                   </div>
-                </div>
-                
-                <div className="px-2">
-                  <h3 className="text-xl md:text-2xl font-heading font-black text-foreground mb-4 leading-tight group-hover:text-primary transition-colors">
-                    {product.name}
-                  </h3>
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground">CERT. SENASA 847</span>
-                    <button className="w-10 h-10 rounded-full bg-primary/5 group-hover:bg-primary group-hover:text-white flex items-center justify-center transition-all">
-                      <Sparkles className="w-4 h-4" />
-                    </button>
+                  <div className="absolute bottom-0 left-0 right-0 p-6">
+                    <h3 className="text-xl font-heading font-bold text-white group-hover:text-primary transition-colors line-clamp-2 drop-shadow-lg">
+                      {product.name}
+                    </h3>
                   </div>
-                </div>
-              </div>
+                </CardContent>
+              </Card>
             </motion.div>
           ))}
-        </motion.div>
-
-        <motion.div 
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-          className="mt-24 text-center p-8 rounded-[2rem] bg-primary/5 border border-primary/5"
-        >
-          <p className="text-sm font-sans font-bold text-muted-foreground uppercase tracking-[0.2em] max-w-2xl mx-auto">
-            Todos los productos M.J.M cumplen con las normativas ambientales vigentes y están diseñados para una aplicación segura.
-          </p>
         </motion.div>
       </div>
     </section>

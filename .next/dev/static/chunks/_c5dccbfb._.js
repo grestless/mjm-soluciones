@@ -178,9 +178,11 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/navigation.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/framer-motion/dist/es/render/components/motion/proxy.mjs [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$components$2f$AnimatePresence$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/framer-motion/dist/es/components/AnimatePresence/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lenis$2f$dist$2f$lenis$2d$react$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/lenis/dist/lenis-react.mjs [app-client] (ecmascript)");
 ;
 var _s = __turbopack_context__.k.signature();
 "use client";
+;
 ;
 ;
 ;
@@ -193,6 +195,7 @@ function FloatingNav() {
     const [isOpen, setIsOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"])();
     const pathname = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["usePathname"])();
+    const lenis = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lenis$2f$dist$2f$lenis$2d$react$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useLenis"])();
     const scrollToSection = (sectionId)=>{
         if (pathname === "/") {
             const element = document.getElementById(sectionId);
@@ -207,74 +210,49 @@ function FloatingNav() {
             setIsOpen(false);
         }
     };
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
-        "FloatingNav.useEffect": ()=>{
-            if (pathname === "/" && window.location.hash) {
-                const hash = window.location.hash.substring(1);
-                setTimeout({
-                    "FloatingNav.useEffect": ()=>{
-                        const element = document.getElementById(hash);
-                        if (element) {
-                            element.scrollIntoView({
-                                behavior: "smooth"
-                            });
-                        }
-                    }
-                }["FloatingNav.useEffect"], 100);
-            }
-        }
-    }["FloatingNav.useEffect"], [
-        pathname
-    ]);
-    // Prevent scrolling when menu is open
+    // Prevent scrolling when menu is open using Lenis
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "FloatingNav.useEffect": ()=>{
             if (isOpen) {
-                document.body.style.overflow = "hidden";
+                lenis?.stop();
             } else {
-                document.body.style.overflow = "unset";
+                lenis?.start();
             }
             return ({
                 "FloatingNav.useEffect": ()=>{
-                    document.body.style.overflow = "unset";
+                    lenis?.start();
                 }
             })["FloatingNav.useEffect"];
         }
     }["FloatingNav.useEffect"], [
-        isOpen
+        isOpen,
+        lenis
     ]);
+    const premiumSpring = {
+        type: "spring",
+        stiffness: 150,
+        damping: 20,
+        mass: 1
+    };
     const menuVariants = {
         initial: {
             opacity: 0,
             y: -20,
-            scale: 0.95
+            scale: 0.96
         },
         animate: {
             opacity: 1,
             y: 0,
             scale: 1,
-            transition: {
-                duration: 0.3,
-                ease: [
-                    0.16,
-                    1,
-                    0.3,
-                    1
-                ]
-            }
+            transition: premiumSpring
         },
         exit: {
             opacity: 0,
             y: -20,
-            scale: 0.95,
+            scale: 0.96,
             transition: {
-                duration: 0.2,
-                ease: [
-                    0.16,
-                    1,
-                    0.3,
-                    1
-                ]
+                ...premiumSpring,
+                stiffness: 200
             }
         }
     };
@@ -287,14 +265,16 @@ function FloatingNav() {
                 opacity: 1,
                 x: 0,
                 transition: {
-                    delay: 0.1 + i * 0.05,
-                    duration: 0.3,
-                    ease: "easeOut"
+                    ...premiumSpring,
+                    delay: i * 0.05
                 }
             }),
         exit: {
             opacity: 0,
-            x: -20
+            x: -10,
+            transition: {
+                duration: 0.2
+            }
         }
     };
     const menuItems = [
@@ -357,7 +337,7 @@ function FloatingNav() {
                                                 children: "MJM"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/floating-nav.tsx",
-                                                lineNumber: 116,
+                                                lineNumber: 98,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -365,28 +345,28 @@ function FloatingNav() {
                                                 children: "Soluciones"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/floating-nav.tsx",
-                                                lineNumber: 117,
+                                                lineNumber: 99,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/floating-nav.tsx",
-                                        lineNumber: 115,
+                                        lineNumber: 97,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/components/floating-nav.tsx",
-                                    lineNumber: 114,
+                                    lineNumber: 96,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/components/floating-nav.tsx",
-                                lineNumber: 109,
+                                lineNumber: 91,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/components/floating-nav.tsx",
-                            lineNumber: 108,
+                            lineNumber: 90,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("nav", {
@@ -427,20 +407,20 @@ function FloatingNav() {
                                                         children: item.label
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/floating-nav.tsx",
-                                                        lineNumber: 142,
+                                                        lineNumber: 124,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                         className: "absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-primary rounded-full scale-0 group-hover:scale-100 transition-transform duration-300"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/floating-nav.tsx",
-                                                        lineNumber: 143,
+                                                        lineNumber: 125,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, item.id, true, {
                                                 fileName: "[project]/components/floating-nav.tsx",
-                                                lineNumber: 136,
+                                                lineNumber: 118,
                                                 columnNumber: 19
                                             }, this)),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -454,25 +434,25 @@ function FloatingNav() {
                                                         children: "Quiénes Somos"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/floating-nav.tsx",
-                                                        lineNumber: 152,
+                                                        lineNumber: 134,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                         className: "absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-primary rounded-full scale-0 group-hover:scale-100 transition-transform duration-300"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/floating-nav.tsx",
-                                                        lineNumber: 153,
+                                                        lineNumber: 135,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/components/floating-nav.tsx",
-                                                lineNumber: 148,
+                                                lineNumber: 130,
                                                 columnNumber: 19
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/components/floating-nav.tsx",
-                                            lineNumber: 147,
+                                            lineNumber: 129,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -486,25 +466,25 @@ function FloatingNav() {
                                                         children: "Casos"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/floating-nav.tsx",
-                                                        lineNumber: 162,
+                                                        lineNumber: 144,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                         className: "absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-primary rounded-full scale-0 group-hover:scale-100 transition-transform duration-300"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/floating-nav.tsx",
-                                                        lineNumber: 163,
+                                                        lineNumber: 145,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/components/floating-nav.tsx",
-                                                lineNumber: 158,
+                                                lineNumber: 140,
                                                 columnNumber: 19
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/components/floating-nav.tsx",
-                                            lineNumber: 157,
+                                            lineNumber: 139,
                                             columnNumber: 17
                                         }, this),
                                         [
@@ -526,36 +506,36 @@ function FloatingNav() {
                                                         children: item.label
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/floating-nav.tsx",
-                                                        lineNumber: 177,
+                                                        lineNumber: 159,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                         className: "absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-primary rounded-full scale-0 group-hover:scale-100 transition-transform duration-300"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/floating-nav.tsx",
-                                                        lineNumber: 178,
+                                                        lineNumber: 160,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, item.id, true, {
                                                 fileName: "[project]/components/floating-nav.tsx",
-                                                lineNumber: 171,
+                                                lineNumber: 153,
                                                 columnNumber: 19
                                             }, this))
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/floating-nav.tsx",
-                                    lineNumber: 130,
+                                    lineNumber: 112,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/components/floating-nav.tsx",
-                                lineNumber: 125,
+                                lineNumber: 107,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/components/floating-nav.tsx",
-                            lineNumber: 124,
+                            lineNumber: 106,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -575,17 +555,17 @@ function FloatingNav() {
                                         className: "clay-card p-1 rounded-2xl",
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$theme$2d$toggle$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["ThemeToggle"], {}, void 0, false, {
                                             fileName: "[project]/components/floating-nav.tsx",
-                                            lineNumber: 194,
+                                            lineNumber: 176,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/components/floating-nav.tsx",
-                                        lineNumber: 193,
+                                        lineNumber: 175,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/components/floating-nav.tsx",
-                                    lineNumber: 188,
+                                    lineNumber: 170,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -615,12 +595,12 @@ function FloatingNav() {
                                                 className: "h-5 w-5"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/floating-nav.tsx",
-                                                lineNumber: 214,
+                                                lineNumber: 196,
                                                 columnNumber: 21
                                             }, this)
                                         }, "close", false, {
                                             fileName: "[project]/components/floating-nav.tsx",
-                                            lineNumber: 207,
+                                            lineNumber: 189,
                                             columnNumber: 19
                                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].div, {
                                             initial: {
@@ -642,22 +622,22 @@ function FloatingNav() {
                                                 className: "h-5 w-5"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/floating-nav.tsx",
-                                                lineNumber: 224,
+                                                lineNumber: 206,
                                                 columnNumber: 21
                                             }, this)
                                         }, "menu", false, {
                                             fileName: "[project]/components/floating-nav.tsx",
-                                            lineNumber: 217,
+                                            lineNumber: 199,
                                             columnNumber: 19
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/components/floating-nav.tsx",
-                                        lineNumber: 205,
+                                        lineNumber: 187,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/components/floating-nav.tsx",
-                                    lineNumber: 199,
+                                    lineNumber: 181,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].div, {
@@ -679,29 +659,29 @@ function FloatingNav() {
                                         children: "Solicitar información"
                                     }, void 0, false, {
                                         fileName: "[project]/components/floating-nav.tsx",
-                                        lineNumber: 237,
+                                        lineNumber: 219,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/components/floating-nav.tsx",
-                                    lineNumber: 231,
+                                    lineNumber: 213,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/floating-nav.tsx",
-                            lineNumber: 186,
+                            lineNumber: 168,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/floating-nav.tsx",
-                    lineNumber: 106,
+                    lineNumber: 88,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/floating-nav.tsx",
-                lineNumber: 105,
+                lineNumber: 87,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$components$2f$AnimatePresence$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["AnimatePresence"], {
@@ -746,7 +726,7 @@ function FloatingNav() {
                                                         children: item.label
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/floating-nav.tsx",
-                                                        lineNumber: 278,
+                                                        lineNumber: 260,
                                                         columnNumber: 27
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -755,23 +735,23 @@ function FloatingNav() {
                                                             className: "h-5 w-5"
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/floating-nav.tsx",
-                                                            lineNumber: 282,
+                                                            lineNumber: 264,
                                                             columnNumber: 29
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/floating-nav.tsx",
-                                                        lineNumber: 281,
+                                                        lineNumber: 263,
                                                         columnNumber: 27
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/components/floating-nav.tsx",
-                                                lineNumber: 277,
+                                                lineNumber: 259,
                                                 columnNumber: 25
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/components/floating-nav.tsx",
-                                            lineNumber: 276,
+                                            lineNumber: 258,
                                             columnNumber: 23
                                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                             onClick: item.action,
@@ -782,7 +762,7 @@ function FloatingNav() {
                                                     children: item.label
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/floating-nav.tsx",
-                                                    lineNumber: 291,
+                                                    lineNumber: 273,
                                                     columnNumber: 25
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -791,28 +771,28 @@ function FloatingNav() {
                                                         className: "h-5 w-5"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/floating-nav.tsx",
-                                                        lineNumber: 295,
+                                                        lineNumber: 277,
                                                         columnNumber: 27
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/floating-nav.tsx",
-                                                    lineNumber: 294,
+                                                    lineNumber: 276,
                                                     columnNumber: 25
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/floating-nav.tsx",
-                                            lineNumber: 287,
+                                            lineNumber: 269,
                                             columnNumber: 23
                                         }, this)
                                     }, item.label, false, {
                                         fileName: "[project]/components/floating-nav.tsx",
-                                        lineNumber: 267,
+                                        lineNumber: 249,
                                         columnNumber: 19
                                     }, this))
                             }, void 0, false, {
                                 fileName: "[project]/components/floating-nav.tsx",
-                                lineNumber: 265,
+                                lineNumber: 247,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].div, {
@@ -831,18 +811,18 @@ function FloatingNav() {
                                                 children: "Tema"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/floating-nav.tsx",
-                                                lineNumber: 312,
+                                                lineNumber: 294,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$theme$2d$toggle$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["ThemeToggle"], {}, void 0, false, {
                                                 fileName: "[project]/components/floating-nav.tsx",
-                                                lineNumber: 313,
+                                                lineNumber: 295,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/floating-nav.tsx",
-                                        lineNumber: 311,
+                                        lineNumber: 293,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -851,38 +831,39 @@ function FloatingNav() {
                                         children: "Solicitar información"
                                     }, void 0, false, {
                                         fileName: "[project]/components/floating-nav.tsx",
-                                        lineNumber: 316,
+                                        lineNumber: 298,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/floating-nav.tsx",
-                                lineNumber: 303,
+                                lineNumber: 285,
                                 columnNumber: 15
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/floating-nav.tsx",
-                        lineNumber: 258,
+                        lineNumber: 240,
                         columnNumber: 13
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/components/floating-nav.tsx",
-                    lineNumber: 251,
+                    lineNumber: 233,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/floating-nav.tsx",
-                lineNumber: 249,
+                lineNumber: 231,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true);
 }
-_s(FloatingNav, "SFrZNiKoxdadhmZr7ZcXgZUHd4k=", false, function() {
+_s(FloatingNav, "BiBE+IRHKXQYvGrPv7Da88zPWpE=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"],
-        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["usePathname"]
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["usePathname"],
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lenis$2f$dist$2f$lenis$2d$react$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useLenis"]
     ];
 });
 _c = FloatingNav;

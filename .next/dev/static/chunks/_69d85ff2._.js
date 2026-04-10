@@ -178,9 +178,11 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/navigation.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/framer-motion/dist/es/render/components/motion/proxy.mjs [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$components$2f$AnimatePresence$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/framer-motion/dist/es/components/AnimatePresence/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lenis$2f$dist$2f$lenis$2d$react$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/lenis/dist/lenis-react.mjs [app-client] (ecmascript)");
 ;
 var _s = __turbopack_context__.k.signature();
 "use client";
+;
 ;
 ;
 ;
@@ -193,6 +195,7 @@ function FloatingNav() {
     const [isOpen, setIsOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"])();
     const pathname = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["usePathname"])();
+    const lenis = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lenis$2f$dist$2f$lenis$2d$react$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useLenis"])();
     const scrollToSection = (sectionId)=>{
         if (pathname === "/") {
             const element = document.getElementById(sectionId);
@@ -207,74 +210,49 @@ function FloatingNav() {
             setIsOpen(false);
         }
     };
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
-        "FloatingNav.useEffect": ()=>{
-            if (pathname === "/" && window.location.hash) {
-                const hash = window.location.hash.substring(1);
-                setTimeout({
-                    "FloatingNav.useEffect": ()=>{
-                        const element = document.getElementById(hash);
-                        if (element) {
-                            element.scrollIntoView({
-                                behavior: "smooth"
-                            });
-                        }
-                    }
-                }["FloatingNav.useEffect"], 100);
-            }
-        }
-    }["FloatingNav.useEffect"], [
-        pathname
-    ]);
-    // Prevent scrolling when menu is open
+    // Prevent scrolling when menu is open using Lenis
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "FloatingNav.useEffect": ()=>{
             if (isOpen) {
-                document.body.style.overflow = "hidden";
+                lenis?.stop();
             } else {
-                document.body.style.overflow = "unset";
+                lenis?.start();
             }
             return ({
                 "FloatingNav.useEffect": ()=>{
-                    document.body.style.overflow = "unset";
+                    lenis?.start();
                 }
             })["FloatingNav.useEffect"];
         }
     }["FloatingNav.useEffect"], [
-        isOpen
+        isOpen,
+        lenis
     ]);
+    const premiumSpring = {
+        type: "spring",
+        stiffness: 150,
+        damping: 20,
+        mass: 1
+    };
     const menuVariants = {
         initial: {
             opacity: 0,
             y: -20,
-            scale: 0.95
+            scale: 0.96
         },
         animate: {
             opacity: 1,
             y: 0,
             scale: 1,
-            transition: {
-                duration: 0.3,
-                ease: [
-                    0.16,
-                    1,
-                    0.3,
-                    1
-                ]
-            }
+            transition: premiumSpring
         },
         exit: {
             opacity: 0,
             y: -20,
-            scale: 0.95,
+            scale: 0.96,
             transition: {
-                duration: 0.2,
-                ease: [
-                    0.16,
-                    1,
-                    0.3,
-                    1
-                ]
+                ...premiumSpring,
+                stiffness: 200
             }
         }
     };
@@ -287,14 +265,16 @@ function FloatingNav() {
                 opacity: 1,
                 x: 0,
                 transition: {
-                    delay: 0.1 + i * 0.05,
-                    duration: 0.3,
-                    ease: "easeOut"
+                    ...premiumSpring,
+                    delay: i * 0.05
                 }
             }),
         exit: {
             opacity: 0,
-            x: -20
+            x: -10,
+            transition: {
+                duration: 0.2
+            }
         }
     };
     const menuItems = [
@@ -357,7 +337,7 @@ function FloatingNav() {
                                                 children: "MJM"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/floating-nav.tsx",
-                                                lineNumber: 116,
+                                                lineNumber: 98,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -365,28 +345,28 @@ function FloatingNav() {
                                                 children: "Soluciones"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/floating-nav.tsx",
-                                                lineNumber: 117,
+                                                lineNumber: 99,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/floating-nav.tsx",
-                                        lineNumber: 115,
+                                        lineNumber: 97,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/components/floating-nav.tsx",
-                                    lineNumber: 114,
+                                    lineNumber: 96,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/components/floating-nav.tsx",
-                                lineNumber: 109,
+                                lineNumber: 91,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/components/floating-nav.tsx",
-                            lineNumber: 108,
+                            lineNumber: 90,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("nav", {
@@ -427,20 +407,20 @@ function FloatingNav() {
                                                         children: item.label
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/floating-nav.tsx",
-                                                        lineNumber: 142,
+                                                        lineNumber: 124,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                         className: "absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-primary rounded-full scale-0 group-hover:scale-100 transition-transform duration-300"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/floating-nav.tsx",
-                                                        lineNumber: 143,
+                                                        lineNumber: 125,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, item.id, true, {
                                                 fileName: "[project]/components/floating-nav.tsx",
-                                                lineNumber: 136,
+                                                lineNumber: 118,
                                                 columnNumber: 19
                                             }, this)),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -454,25 +434,25 @@ function FloatingNav() {
                                                         children: "Quiénes Somos"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/floating-nav.tsx",
-                                                        lineNumber: 152,
+                                                        lineNumber: 134,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                         className: "absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-primary rounded-full scale-0 group-hover:scale-100 transition-transform duration-300"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/floating-nav.tsx",
-                                                        lineNumber: 153,
+                                                        lineNumber: 135,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/components/floating-nav.tsx",
-                                                lineNumber: 148,
+                                                lineNumber: 130,
                                                 columnNumber: 19
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/components/floating-nav.tsx",
-                                            lineNumber: 147,
+                                            lineNumber: 129,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -486,25 +466,25 @@ function FloatingNav() {
                                                         children: "Casos"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/floating-nav.tsx",
-                                                        lineNumber: 162,
+                                                        lineNumber: 144,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                         className: "absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-primary rounded-full scale-0 group-hover:scale-100 transition-transform duration-300"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/floating-nav.tsx",
-                                                        lineNumber: 163,
+                                                        lineNumber: 145,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/components/floating-nav.tsx",
-                                                lineNumber: 158,
+                                                lineNumber: 140,
                                                 columnNumber: 19
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/components/floating-nav.tsx",
-                                            lineNumber: 157,
+                                            lineNumber: 139,
                                             columnNumber: 17
                                         }, this),
                                         [
@@ -526,36 +506,36 @@ function FloatingNav() {
                                                         children: item.label
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/floating-nav.tsx",
-                                                        lineNumber: 177,
+                                                        lineNumber: 159,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                         className: "absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-primary rounded-full scale-0 group-hover:scale-100 transition-transform duration-300"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/floating-nav.tsx",
-                                                        lineNumber: 178,
+                                                        lineNumber: 160,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, item.id, true, {
                                                 fileName: "[project]/components/floating-nav.tsx",
-                                                lineNumber: 171,
+                                                lineNumber: 153,
                                                 columnNumber: 19
                                             }, this))
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/floating-nav.tsx",
-                                    lineNumber: 130,
+                                    lineNumber: 112,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/components/floating-nav.tsx",
-                                lineNumber: 125,
+                                lineNumber: 107,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/components/floating-nav.tsx",
-                            lineNumber: 124,
+                            lineNumber: 106,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -575,17 +555,17 @@ function FloatingNav() {
                                         className: "clay-card p-1 rounded-2xl",
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$theme$2d$toggle$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["ThemeToggle"], {}, void 0, false, {
                                             fileName: "[project]/components/floating-nav.tsx",
-                                            lineNumber: 194,
+                                            lineNumber: 176,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/components/floating-nav.tsx",
-                                        lineNumber: 193,
+                                        lineNumber: 175,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/components/floating-nav.tsx",
-                                    lineNumber: 188,
+                                    lineNumber: 170,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -615,12 +595,12 @@ function FloatingNav() {
                                                 className: "h-5 w-5"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/floating-nav.tsx",
-                                                lineNumber: 214,
+                                                lineNumber: 196,
                                                 columnNumber: 21
                                             }, this)
                                         }, "close", false, {
                                             fileName: "[project]/components/floating-nav.tsx",
-                                            lineNumber: 207,
+                                            lineNumber: 189,
                                             columnNumber: 19
                                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].div, {
                                             initial: {
@@ -642,22 +622,22 @@ function FloatingNav() {
                                                 className: "h-5 w-5"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/floating-nav.tsx",
-                                                lineNumber: 224,
+                                                lineNumber: 206,
                                                 columnNumber: 21
                                             }, this)
                                         }, "menu", false, {
                                             fileName: "[project]/components/floating-nav.tsx",
-                                            lineNumber: 217,
+                                            lineNumber: 199,
                                             columnNumber: 19
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/components/floating-nav.tsx",
-                                        lineNumber: 205,
+                                        lineNumber: 187,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/components/floating-nav.tsx",
-                                    lineNumber: 199,
+                                    lineNumber: 181,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].div, {
@@ -679,29 +659,29 @@ function FloatingNav() {
                                         children: "Solicitar información"
                                     }, void 0, false, {
                                         fileName: "[project]/components/floating-nav.tsx",
-                                        lineNumber: 237,
+                                        lineNumber: 219,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/components/floating-nav.tsx",
-                                    lineNumber: 231,
+                                    lineNumber: 213,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/floating-nav.tsx",
-                            lineNumber: 186,
+                            lineNumber: 168,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/floating-nav.tsx",
-                    lineNumber: 106,
+                    lineNumber: 88,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/floating-nav.tsx",
-                lineNumber: 105,
+                lineNumber: 87,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$components$2f$AnimatePresence$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["AnimatePresence"], {
@@ -746,7 +726,7 @@ function FloatingNav() {
                                                         children: item.label
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/floating-nav.tsx",
-                                                        lineNumber: 278,
+                                                        lineNumber: 260,
                                                         columnNumber: 27
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -755,23 +735,23 @@ function FloatingNav() {
                                                             className: "h-5 w-5"
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/floating-nav.tsx",
-                                                            lineNumber: 282,
+                                                            lineNumber: 264,
                                                             columnNumber: 29
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/floating-nav.tsx",
-                                                        lineNumber: 281,
+                                                        lineNumber: 263,
                                                         columnNumber: 27
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/components/floating-nav.tsx",
-                                                lineNumber: 277,
+                                                lineNumber: 259,
                                                 columnNumber: 25
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/components/floating-nav.tsx",
-                                            lineNumber: 276,
+                                            lineNumber: 258,
                                             columnNumber: 23
                                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                             onClick: item.action,
@@ -782,7 +762,7 @@ function FloatingNav() {
                                                     children: item.label
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/floating-nav.tsx",
-                                                    lineNumber: 291,
+                                                    lineNumber: 273,
                                                     columnNumber: 25
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -791,28 +771,28 @@ function FloatingNav() {
                                                         className: "h-5 w-5"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/floating-nav.tsx",
-                                                        lineNumber: 295,
+                                                        lineNumber: 277,
                                                         columnNumber: 27
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/floating-nav.tsx",
-                                                    lineNumber: 294,
+                                                    lineNumber: 276,
                                                     columnNumber: 25
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/floating-nav.tsx",
-                                            lineNumber: 287,
+                                            lineNumber: 269,
                                             columnNumber: 23
                                         }, this)
                                     }, item.label, false, {
                                         fileName: "[project]/components/floating-nav.tsx",
-                                        lineNumber: 267,
+                                        lineNumber: 249,
                                         columnNumber: 19
                                     }, this))
                             }, void 0, false, {
                                 fileName: "[project]/components/floating-nav.tsx",
-                                lineNumber: 265,
+                                lineNumber: 247,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].div, {
@@ -831,18 +811,18 @@ function FloatingNav() {
                                                 children: "Tema"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/floating-nav.tsx",
-                                                lineNumber: 312,
+                                                lineNumber: 294,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$theme$2d$toggle$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["ThemeToggle"], {}, void 0, false, {
                                                 fileName: "[project]/components/floating-nav.tsx",
-                                                lineNumber: 313,
+                                                lineNumber: 295,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/floating-nav.tsx",
-                                        lineNumber: 311,
+                                        lineNumber: 293,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -851,38 +831,39 @@ function FloatingNav() {
                                         children: "Solicitar información"
                                     }, void 0, false, {
                                         fileName: "[project]/components/floating-nav.tsx",
-                                        lineNumber: 316,
+                                        lineNumber: 298,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/floating-nav.tsx",
-                                lineNumber: 303,
+                                lineNumber: 285,
                                 columnNumber: 15
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/floating-nav.tsx",
-                        lineNumber: 258,
+                        lineNumber: 240,
                         columnNumber: 13
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/components/floating-nav.tsx",
-                    lineNumber: 251,
+                    lineNumber: 233,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/floating-nav.tsx",
-                lineNumber: 249,
+                lineNumber: 231,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true);
 }
-_s(FloatingNav, "SFrZNiKoxdadhmZr7ZcXgZUHd4k=", false, function() {
+_s(FloatingNav, "BiBE+IRHKXQYvGrPv7Da88zPWpE=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"],
-        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["usePathname"]
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["usePathname"],
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lenis$2f$dist$2f$lenis$2d$react$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useLenis"]
     ];
 });
 _c = FloatingNav;
@@ -975,287 +956,81 @@ _s(Counter, "G7stCpQSJLSMrgwXwI/NQaFZxO8=", false, function() {
 });
 _c = Counter;
 function HeroBento() {
+    const premiumSpring = {
+        type: "spring",
+        stiffness: 100,
+        damping: 20,
+        mass: 1
+    };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
         id: "inicio",
         className: "relative min-h-screen pt-24 md:pt-32 pb-12 md:pb-16 px-4 overflow-hidden",
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "absolute inset-0 opacity-[0.04]",
-                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
-                    className: "w-full h-full",
-                    xmlns: "http://www.w3.org/2000/svg",
-                    children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("defs", {
-                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("pattern", {
-                                id: "molecules",
-                                x: "0",
-                                y: "0",
-                                width: "120",
-                                height: "120",
-                                patternUnits: "userSpaceOnUse",
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].circle, {
-                                        cx: "20",
-                                        cy: "20",
-                                        r: "4",
-                                        fill: "currentColor",
-                                        className: "text-primary",
-                                        animate: {
-                                            y: [
-                                                0,
-                                                -15,
-                                                0
-                                            ],
-                                            opacity: [
-                                                0.6,
-                                                1,
-                                                0.6
-                                            ],
-                                            scale: [
-                                                1,
-                                                1.1,
-                                                1
-                                            ]
-                                        },
-                                        transition: {
-                                            duration: 5,
-                                            repeat: Number.POSITIVE_INFINITY,
-                                            ease: "easeInOut"
-                                        }
-                                    }, void 0, false, {
-                                        fileName: "[project]/components/hero-bento.tsx",
-                                        lineNumber: 41,
-                                        columnNumber: 15
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].circle, {
-                                        cx: "60",
-                                        cy: "30",
-                                        r: "5",
-                                        fill: "currentColor",
-                                        className: "text-accent",
-                                        animate: {
-                                            y: [
-                                                0,
-                                                15,
-                                                0
-                                            ],
-                                            x: [
-                                                0,
-                                                10,
-                                                0
-                                            ],
-                                            opacity: [
-                                                0.7,
-                                                1,
-                                                0.7
-                                            ]
-                                        },
-                                        transition: {
-                                            duration: 7,
-                                            repeat: Number.POSITIVE_INFINITY,
-                                            ease: "easeInOut",
-                                            delay: 0.5
-                                        }
-                                    }, void 0, false, {
-                                        fileName: "[project]/components/hero-bento.tsx",
-                                        lineNumber: 50,
-                                        columnNumber: 15
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].circle, {
-                                        cx: "100",
-                                        cy: "25",
-                                        r: "3",
-                                        fill: "currentColor",
-                                        className: "text-primary",
-                                        animate: {
-                                            scale: [
-                                                1,
-                                                1.5,
-                                                1
-                                            ],
-                                            opacity: [
-                                                0.5,
-                                                1,
-                                                0.5
-                                            ],
-                                            y: [
-                                                0,
-                                                -10,
-                                                0
-                                            ]
-                                        },
-                                        transition: {
-                                            duration: 4,
-                                            repeat: Number.POSITIVE_INFINITY,
-                                            ease: "easeInOut",
-                                            delay: 1
-                                        }
-                                    }, void 0, false, {
-                                        fileName: "[project]/components/hero-bento.tsx",
-                                        lineNumber: 59,
-                                        columnNumber: 15
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].line, {
-                                        x1: "20",
-                                        y1: "20",
-                                        x2: "60",
-                                        y2: "30",
-                                        stroke: "currentColor",
-                                        strokeWidth: "1",
-                                        className: "text-primary/30",
-                                        animate: {
-                                            opacity: [
-                                                0.1,
-                                                0.6,
-                                                0.1
-                                            ],
-                                            pathLength: [
-                                                0.8,
-                                                1,
-                                                0.8
-                                            ]
-                                        },
-                                        transition: {
-                                            duration: 5,
-                                            repeat: Number.POSITIVE_INFINITY,
-                                            ease: "easeInOut"
-                                        }
-                                    }, void 0, false, {
-                                        fileName: "[project]/components/hero-bento.tsx",
-                                        lineNumber: 68,
-                                        columnNumber: 15
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].line, {
-                                        x1: "60",
-                                        y1: "30",
-                                        x2: "100",
-                                        y2: "25",
-                                        stroke: "currentColor",
-                                        strokeWidth: "1",
-                                        className: "text-primary/30",
-                                        animate: {
-                                            opacity: [
-                                                0.1,
-                                                0.6,
-                                                0.1
-                                            ],
-                                            pathLength: [
-                                                0.8,
-                                                1,
-                                                0.8
-                                            ]
-                                        },
-                                        transition: {
-                                            duration: 7,
-                                            repeat: Number.POSITIVE_INFINITY,
-                                            ease: "easeInOut",
-                                            delay: 0.5
-                                        }
-                                    }, void 0, false, {
-                                        fileName: "[project]/components/hero-bento.tsx",
-                                        lineNumber: 79,
-                                        columnNumber: 15
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].path, {
-                                        d: "M40 70 Q40 60, 45 55 Q50 60, 50 70 Q50 80, 45 85 Q40 80, 40 70 Z",
-                                        fill: "currentColor",
-                                        className: "text-accent/40",
-                                        animate: {
-                                            rotate: [
-                                                0,
-                                                15,
-                                                0
-                                            ],
-                                            scale: [
-                                                0.9,
-                                                1.2,
-                                                0.9
-                                            ],
-                                            y: [
-                                                0,
-                                                -5,
-                                                0
-                                            ]
-                                        },
-                                        style: {
-                                            originX: "45px",
-                                            originY: "70px"
-                                        },
-                                        transition: {
-                                            duration: 8,
-                                            repeat: Number.POSITIVE_INFINITY,
-                                            ease: "easeInOut"
-                                        }
-                                    }, void 0, false, {
-                                        fileName: "[project]/components/hero-bento.tsx",
-                                        lineNumber: 90,
-                                        columnNumber: 15
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].path, {
-                                        d: "M80 90 Q80 82, 84 78 Q88 82, 88 90 Q88 98, 84 102 Q80 98, 80 90 Z",
-                                        fill: "currentColor",
-                                        className: "text-primary/40",
-                                        animate: {
-                                            y: [
-                                                0,
-                                                -20,
-                                                0
-                                            ],
-                                            rotate: [
-                                                0,
-                                                -10,
-                                                0
-                                            ],
-                                            scale: [
-                                                1,
-                                                1.1,
-                                                1
-                                            ]
-                                        },
-                                        style: {
-                                            originX: "84px",
-                                            originY: "90px"
-                                        },
-                                        transition: {
-                                            duration: 9,
-                                            repeat: Number.POSITIVE_INFINITY,
-                                            ease: "easeInOut",
-                                            delay: 1.5
-                                        }
-                                    }, void 0, false, {
-                                        fileName: "[project]/components/hero-bento.tsx",
-                                        lineNumber: 98,
-                                        columnNumber: 15
-                                    }, this)
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/components/hero-bento.tsx",
-                                lineNumber: 40,
-                                columnNumber: 13
-                            }, this)
-                        }, void 0, false, {
-                            fileName: "[project]/components/hero-bento.tsx",
-                            lineNumber: 39,
-                            columnNumber: 11
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("rect", {
-                            width: "100%",
-                            height: "100%",
-                            fill: "url(#molecules)"
-                        }, void 0, false, {
-                            fileName: "[project]/components/hero-bento.tsx",
-                            lineNumber: 108,
-                            columnNumber: 11
-                        }, this)
-                    ]
-                }, void 0, true, {
-                    fileName: "[project]/components/hero-bento.tsx",
-                    lineNumber: 38,
-                    columnNumber: 9
-                }, this)
-            }, void 0, false, {
+                className: "absolute inset-0 overflow-hidden pointer-events-none",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].div, {
+                        animate: {
+                            scale: [
+                                1,
+                                1.2,
+                                1
+                            ],
+                            rotate: [
+                                0,
+                                90,
+                                0
+                            ],
+                            opacity: [
+                                0.3,
+                                0.5,
+                                0.3
+                            ]
+                        },
+                        transition: {
+                            duration: 20,
+                            repeat: Infinity,
+                            ease: "linear"
+                        },
+                        className: "absolute -top-[20%] -left-[10%] w-[50%] h-[50%] rounded-full bg-primary/20 blur-[120px] mix-blend-screen"
+                    }, void 0, false, {
+                        fileName: "[project]/components/hero-bento.tsx",
+                        lineNumber: 39,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].div, {
+                        animate: {
+                            scale: [
+                                1,
+                                1.5,
+                                1
+                            ],
+                            rotate: [
+                                0,
+                                -90,
+                                0
+                            ],
+                            opacity: [
+                                0.2,
+                                0.4,
+                                0.2
+                            ]
+                        },
+                        transition: {
+                            duration: 25,
+                            repeat: Infinity,
+                            ease: "linear"
+                        },
+                        className: "absolute top-[20%] -right-[10%] w-[40%] h-[60%] rounded-full bg-accent/20 blur-[140px] mix-blend-screen"
+                    }, void 0, false, {
+                        fileName: "[project]/components/hero-bento.tsx",
+                        lineNumber: 44,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
                 fileName: "[project]/components/hero-bento.tsx",
-                lineNumber: 37,
+                lineNumber: 38,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1272,15 +1047,7 @@ function HeroBento() {
                                 opacity: 1,
                                 y: 0
                             },
-                            transition: {
-                                duration: 0.8,
-                                ease: [
-                                    0.16,
-                                    1,
-                                    0.3,
-                                    1
-                                ]
-                            },
+                            transition: premiumSpring,
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
                                     className: "text-4xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-heading font-black mb-8 text-balance leading-[0.9] tracking-tighter",
@@ -1291,7 +1058,7 @@ function HeroBento() {
                                             children: "plagas"
                                         }, void 0, false, {
                                             fileName: "[project]/components/hero-bento.tsx",
-                                            lineNumber: 120,
+                                            lineNumber: 60,
                                             columnNumber: 26
                                         }, this),
                                         " profesional con ",
@@ -1300,13 +1067,13 @@ function HeroBento() {
                                             children: "impacto real."
                                         }, void 0, false, {
                                             fileName: "[project]/components/hero-bento.tsx",
-                                            lineNumber: 120,
+                                            lineNumber: 60,
                                             columnNumber: 87
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/hero-bento.tsx",
-                                    lineNumber: 119,
+                                    lineNumber: 59,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1314,7 +1081,7 @@ function HeroBento() {
                                     children: "Tecnología de vanguardia y fórmulas exclusivas. Protegemos lo que más importa con seriedad y efectividad certificada."
                                 }, void 0, false, {
                                     fileName: "[project]/components/hero-bento.tsx",
-                                    lineNumber: 122,
+                                    lineNumber: 62,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1327,7 +1094,7 @@ function HeroBento() {
                                             className: "w-full sm:w-auto",
                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
                                                 size: "lg",
-                                                className: "clay-button text-base md:text-xl px-10 py-8 w-full group",
+                                                className: "premium-button text-base md:text-xl px-10 py-8 w-full group",
                                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                     className: "flex items-center gap-2",
                                                     children: [
@@ -1336,23 +1103,23 @@ function HeroBento() {
                                                             className: "w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/hero-bento.tsx",
-                                                            lineNumber: 138,
+                                                            lineNumber: 78,
                                                             columnNumber: 21
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/components/hero-bento.tsx",
-                                                    lineNumber: 136,
+                                                    lineNumber: 76,
                                                     columnNumber: 19
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/components/hero-bento.tsx",
-                                                lineNumber: 132,
+                                                lineNumber: 72,
                                                 columnNumber: 17
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/components/hero-bento.tsx",
-                                            lineNumber: 126,
+                                            lineNumber: 66,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -1365,29 +1132,29 @@ function HeroBento() {
                                                 children: "Ver resultados"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/hero-bento.tsx",
-                                                lineNumber: 143,
+                                                lineNumber: 83,
                                                 columnNumber: 17
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/components/hero-bento.tsx",
-                                            lineNumber: 142,
+                                            lineNumber: 82,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/hero-bento.tsx",
-                                    lineNumber: 125,
+                                    lineNumber: 65,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/hero-bento.tsx",
-                            lineNumber: 114,
+                            lineNumber: 54,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/components/hero-bento.tsx",
-                        lineNumber: 113,
+                        lineNumber: 53,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1406,11 +1173,12 @@ function HeroBento() {
                                     once: true
                                 },
                                 transition: {
+                                    ...premiumSpring,
                                     delay: 0.1
                                 },
                                 className: "md:col-span-12 lg:col-span-7",
                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "clay-card rounded-[2.5rem] p-8 md:p-12 flex flex-col md:flex-row gap-8 items-center h-full group",
+                                    className: "glass-card rounded-[2.5rem] p-8 md:p-12 flex flex-col md:flex-row gap-8 items-center h-full group",
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "flex-1",
@@ -1421,12 +1189,12 @@ function HeroBento() {
                                                         className: "w-7 h-7 text-accent"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/hero-bento.tsx",
-                                                        lineNumber: 167,
+                                                        lineNumber: 107,
                                                         columnNumber: 19
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/hero-bento.tsx",
-                                                    lineNumber: 166,
+                                                    lineNumber: 106,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
@@ -1438,14 +1206,14 @@ function HeroBento() {
                                                             children: "laboratorio"
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/hero-bento.tsx",
-                                                            lineNumber: 170,
+                                                            lineNumber: 110,
                                                             columnNumber: 30
                                                         }, this),
                                                         " propia"
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/components/hero-bento.tsx",
-                                                    lineNumber: 169,
+                                                    lineNumber: 109,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1453,7 +1221,7 @@ function HeroBento() {
                                                     children: "No somos solo aplicadores. Desarrollamos soluciones químicas de alta fidelidad que garantizan la eliminación total sin comprometer la salud de tu entorno."
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/hero-bento.tsx",
-                                                    lineNumber: 172,
+                                                    lineNumber: 112,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -1467,24 +1235,24 @@ function HeroBento() {
                                                                 className: "ml-2 w-5 h-5 group-hover/btn:scale-110 transition-transform"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/components/hero-bento.tsx",
-                                                                lineNumber: 178,
+                                                                lineNumber: 118,
                                                                 columnNumber: 21
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/components/hero-bento.tsx",
-                                                        lineNumber: 176,
+                                                        lineNumber: 116,
                                                         columnNumber: 19
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/hero-bento.tsx",
-                                                    lineNumber: 175,
+                                                    lineNumber: 115,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/hero-bento.tsx",
-                                            lineNumber: 165,
+                                            lineNumber: 105,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1494,7 +1262,7 @@ function HeroBento() {
                                                     className: "absolute inset-0 bg-accent/10 rounded-full blur-3xl animate-pulse"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/hero-bento.tsx",
-                                                    lineNumber: 183,
+                                                    lineNumber: 123,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
@@ -1503,24 +1271,24 @@ function HeroBento() {
                                                     className: "relative z-10 w-full h-full object-contain mix-blend-multiply opacity-80"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/hero-bento.tsx",
-                                                    lineNumber: 184,
+                                                    lineNumber: 124,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/hero-bento.tsx",
-                                            lineNumber: 182,
+                                            lineNumber: 122,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/hero-bento.tsx",
-                                    lineNumber: 164,
+                                    lineNumber: 104,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/components/hero-bento.tsx",
-                                lineNumber: 157,
+                                lineNumber: 97,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].div, {
@@ -1536,17 +1304,18 @@ function HeroBento() {
                                     once: true
                                 },
                                 transition: {
+                                    ...premiumSpring,
                                     delay: 0.2
                                 },
                                 className: "md:col-span-6 lg:col-span-5",
                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "clay-card rounded-[2.5rem] p-8 md:p-10 flex flex-col justify-between h-full bg-primary text-primary-foreground overflow-hidden relative",
+                                    className: "glass-card rounded-[2.5rem] p-8 md:p-10 flex flex-col justify-between h-full bg-primary text-primary-foreground overflow-hidden relative",
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "absolute top-0 right-0 w-32 h-32 bg-accent/20 blur-3xl rounded-full -mr-16 -mt-16"
                                         }, void 0, false, {
                                             fileName: "[project]/components/hero-bento.tsx",
-                                            lineNumber: 202,
+                                            lineNumber: 142,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1556,7 +1325,7 @@ function HeroBento() {
                                                     children: "Rendimiento"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/hero-bento.tsx",
-                                                    lineNumber: 204,
+                                                    lineNumber: 144,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1571,12 +1340,12 @@ function HeroBento() {
                                                                         suffix: "%"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/components/hero-bento.tsx",
-                                                                        lineNumber: 208,
+                                                                        lineNumber: 148,
                                                                         columnNumber: 23
                                                                     }, this)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/components/hero-bento.tsx",
-                                                                    lineNumber: 207,
+                                                                    lineNumber: 147,
                                                                     columnNumber: 21
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1584,20 +1353,20 @@ function HeroBento() {
                                                                     children: "Efectividad"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/components/hero-bento.tsx",
-                                                                    lineNumber: 210,
+                                                                    lineNumber: 150,
                                                                     columnNumber: 21
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/components/hero-bento.tsx",
-                                                            lineNumber: 206,
+                                                            lineNumber: 146,
                                                             columnNumber: 19
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                             className: "h-px bg-white/10 w-full"
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/hero-bento.tsx",
-                                                            lineNumber: 212,
+                                                            lineNumber: 152,
                                                             columnNumber: 19
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1612,12 +1381,12 @@ function HeroBento() {
                                                                                 suffix: "%"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/components/hero-bento.tsx",
-                                                                                lineNumber: 216,
+                                                                                lineNumber: 156,
                                                                                 columnNumber: 25
                                                                             }, this)
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/components/hero-bento.tsx",
-                                                                            lineNumber: 215,
+                                                                            lineNumber: 155,
                                                                             columnNumber: 23
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1625,13 +1394,13 @@ function HeroBento() {
                                                                             children: "Sustentable"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/components/hero-bento.tsx",
-                                                                            lineNumber: 218,
+                                                                            lineNumber: 158,
                                                                             columnNumber: 23
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/components/hero-bento.tsx",
-                                                                    lineNumber: 214,
+                                                                    lineNumber: 154,
                                                                     columnNumber: 21
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1644,12 +1413,12 @@ function HeroBento() {
                                                                                 suffix: "h"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/components/hero-bento.tsx",
-                                                                                lineNumber: 222,
+                                                                                lineNumber: 162,
                                                                                 columnNumber: 25
                                                                             }, this)
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/components/hero-bento.tsx",
-                                                                            lineNumber: 221,
+                                                                            lineNumber: 161,
                                                                             columnNumber: 23
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1657,42 +1426,42 @@ function HeroBento() {
                                                                             children: "Acción"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/components/hero-bento.tsx",
-                                                                            lineNumber: 224,
+                                                                            lineNumber: 164,
                                                                             columnNumber: 23
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/components/hero-bento.tsx",
-                                                                    lineNumber: 220,
+                                                                    lineNumber: 160,
                                                                     columnNumber: 21
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/components/hero-bento.tsx",
-                                                            lineNumber: 213,
+                                                            lineNumber: 153,
                                                             columnNumber: 19
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/components/hero-bento.tsx",
-                                                    lineNumber: 205,
+                                                    lineNumber: 145,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/hero-bento.tsx",
-                                            lineNumber: 203,
+                                            lineNumber: 143,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/hero-bento.tsx",
-                                    lineNumber: 201,
+                                    lineNumber: 141,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/components/hero-bento.tsx",
-                                lineNumber: 194,
+                                lineNumber: 134,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].div, {
@@ -1708,11 +1477,12 @@ function HeroBento() {
                                     once: true
                                 },
                                 transition: {
+                                    ...premiumSpring,
                                     delay: 0.3
                                 },
                                 className: "md:col-span-6 lg:col-span-4",
                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "clay-card rounded-[2.5rem] p-8 flex flex-col items-center text-center h-full group hover:bg-accent/5 transition-colors",
+                                    className: "glass-card rounded-[2.5rem] p-8 flex flex-col items-center text-center h-full group hover:bg-accent/5 transition-colors",
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "w-20 h-20 rounded-3xl bg-primary/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform",
@@ -1720,12 +1490,12 @@ function HeroBento() {
                                                 className: "w-10 h-10 text-primary"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/hero-bento.tsx",
-                                                lineNumber: 242,
+                                                lineNumber: 182,
                                                 columnNumber: 17
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/components/hero-bento.tsx",
-                                            lineNumber: 241,
+                                            lineNumber: 181,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -1734,14 +1504,14 @@ function HeroBento() {
                                                 "Compromiso ",
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
                                                     fileName: "[project]/components/hero-bento.tsx",
-                                                    lineNumber: 244,
+                                                    lineNumber: 184,
                                                     columnNumber: 80
                                                 }, this),
                                                 "Ecológico"
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/hero-bento.tsx",
-                                            lineNumber: 244,
+                                            lineNumber: 184,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1749,18 +1519,18 @@ function HeroBento() {
                                             children: "Nuestros procesos respetan la biodiversidad. Controlamos plagas, no el ecosistema."
                                         }, void 0, false, {
                                             fileName: "[project]/components/hero-bento.tsx",
-                                            lineNumber: 245,
+                                            lineNumber: 185,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/hero-bento.tsx",
-                                    lineNumber: 240,
+                                    lineNumber: 180,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/components/hero-bento.tsx",
-                                lineNumber: 233,
+                                lineNumber: 173,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].div, {
@@ -1776,11 +1546,12 @@ function HeroBento() {
                                     once: true
                                 },
                                 transition: {
+                                    ...premiumSpring,
                                     delay: 0.4
                                 },
                                 className: "md:col-span-12 lg:col-span-8",
                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "clay-card rounded-[2.5rem] h-full min-h-[400px] overflow-hidden relative group",
+                                    className: "glass-card rounded-[2.5rem] h-full min-h-[400px] overflow-hidden relative group",
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
                                             src: "/images/design-mode/producto2.png",
@@ -1788,7 +1559,7 @@ function HeroBento() {
                                             className: "w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                                         }, void 0, false, {
                                             fileName: "[project]/components/hero-bento.tsx",
-                                            lineNumber: 260,
+                                            lineNumber: 200,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1800,7 +1571,7 @@ function HeroBento() {
                                                         className: "h-px flex-1 bg-white/30"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/hero-bento.tsx",
-                                                        lineNumber: 267,
+                                                        lineNumber: 207,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1808,54 +1579,54 @@ function HeroBento() {
                                                         children: "Producto Certificado"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/hero-bento.tsx",
-                                                        lineNumber: 268,
+                                                        lineNumber: 208,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                         className: "h-px flex-1 bg-white/30"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/hero-bento.tsx",
-                                                        lineNumber: 269,
+                                                        lineNumber: 209,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/components/hero-bento.tsx",
-                                                lineNumber: 266,
+                                                lineNumber: 206,
                                                 columnNumber: 17
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/components/hero-bento.tsx",
-                                            lineNumber: 265,
+                                            lineNumber: 205,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/hero-bento.tsx",
-                                    lineNumber: 259,
+                                    lineNumber: 199,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/components/hero-bento.tsx",
-                                lineNumber: 252,
+                                lineNumber: 192,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/hero-bento.tsx",
-                        lineNumber: 155,
+                        lineNumber: 95,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/hero-bento.tsx",
-                lineNumber: 112,
+                lineNumber: 52,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/hero-bento.tsx",
-        lineNumber: 36,
+        lineNumber: 37,
         columnNumber: 5
     }, this);
 }
@@ -1929,18 +1700,23 @@ function BenefitsSection() {
             }
         }
     };
+    const premiumSpring = {
+        type: "spring",
+        stiffness: 100,
+        damping: 20,
+        mass: 1
+    };
     const itemVariants = {
         hidden: {
             y: 30,
-            opacity: 0
+            opacity: 0,
+            scale: 0.95
         },
         visible: {
             y: 0,
             opacity: 1,
-            transition: {
-                duration: 0.6,
-                ease: "easeOut"
-            }
+            scale: 1,
+            transition: premiumSpring
         }
     };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -2043,7 +1819,7 @@ function BenefitsSection() {
                                 variants: itemVariants,
                                 className: "group",
                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "clay-card rounded-[2rem] p-8 h-full flex flex-col justify-between hover:scale-[1.03] transition-all hover:bg-accent/5 duration-500 cursor-default",
+                                    className: "glass-card rounded-[2rem] p-8 h-full flex flex-col justify-between hover:scale-[1.03] transition-all hover:bg-accent/5 duration-500 cursor-default",
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             children: [

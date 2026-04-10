@@ -1,8 +1,7 @@
 "use client"
 
 import { motion, Variants } from "framer-motion"
-import { Beaker, Shield, TrendingUp, Leaf, ArrowRight } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { Beaker, Shield, TrendingUp, Leaf } from "lucide-react"
 
 export function BenefitsSection() {
   const benefits = [
@@ -47,13 +46,14 @@ export function BenefitsSection() {
   }
 
   const itemVariants: Variants = {
-    hidden: { y: 30, opacity: 0 },
+    hidden: { y: 30, opacity: 0, scale: 0.95 },
     visible: {
       y: 0,
       opacity: 1,
+      scale: 1,
       transition: {
         duration: 0.6,
-        ease: "easeOut" as const,
+        ease: "easeOut",
       },
     },
   }
@@ -61,8 +61,7 @@ export function BenefitsSection() {
   return (
     <section id="beneficios" className="py-32 px-4 bg-background relative overflow-hidden">
       {/* Background decorative mesh gradient hint */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-accent/5 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/5 via-background to-background pointer-events-none -z-10" />
 
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-left mb-20 max-w-3xl">
@@ -96,7 +95,7 @@ export function BenefitsSection() {
             const Icon = benefit.icon
             return (
               <motion.div key={index} variants={itemVariants} className="group">
-                <div className="clay-card rounded-[2rem] p-8 h-full flex flex-col justify-between hover:scale-[1.03] transition-all hover:bg-accent/5 duration-500 cursor-default">
+                <div className="glass-card rounded-[2rem] p-8 h-full flex flex-col justify-between hover:scale-[1.03] transition-all hover:bg-accent/5 duration-500 cursor-default">
                   <div>
                     <div className={`w-16 h-16 rounded-2xl ${benefit.color} flex items-center justify-center mb-8 shadow-inner group-hover:rotate-6 transition-transform duration-500`}>
                       <Icon className="w-8 h-8" />
@@ -107,10 +106,6 @@ export function BenefitsSection() {
                     </div>
                     <p className="text-muted-foreground leading-relaxed text-sm md:text-base">{benefit.description}</p>
                   </div>
-                  <div className="mt-8 pt-6 border-t border-primary/5 flex items-center justify-between group/more cursor-pointer">
-                    <span className="text-xs font-heading font-black uppercase tracking-widest text-primary">Saber más</span>
-                    <ArrowRight className="w-4 h-4 text-primary group-hover/more:translate-x-1 transition-transform" />
-                  </div>
                 </div>
               </motion.div>
             )
@@ -120,10 +115,10 @@ export function BenefitsSection() {
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          className="mt-20 p-8 clay-card rounded-3xl bg-primary text-primary-foreground flex flex-col md:flex-row items-center justify-between gap-8"
+          className="mt-20 p-8 clay-card rounded-3xl bg-primary text-primary-foreground flex items-center justify-center gap-8"
         >
-          <div className="flex items-center gap-6">
-            <div className="bg-accent p-4 rounded-2xl shadow-lg">
+          <div className="flex flex-col md:flex-row items-center gap-6 text-center md:text-left">
+            <div className="bg-accent p-4 rounded-2xl shadow-lg shrink-0">
               <TrendingUp className="w-8 h-8 text-primary" />
             </div>
             <div>
@@ -131,9 +126,6 @@ export function BenefitsSection() {
               <p className="text-primary-foreground/70 font-medium leading-tight">Cada envase incluye un código QR con el modo de uso paso a paso.</p>
             </div>
           </div>
-          <Button className="whitespace-nowrap h-auto px-8 py-4 bg-white text-primary hover:bg-white/90 rounded-2xl font-heading font-black uppercase tracking-widest text-xs hover:scale-105 active:scale-95 transition-all shadow-xl">
-            Ver tutoriales
-          </Button>
         </motion.div>
       </div>
     </section>

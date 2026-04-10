@@ -17,8 +17,8 @@ Persistence (Master + Overrides pattern):
 import argparse
 import sys
 import io
-from core import CSV_CONFIG, AVAILABLE_STACKS, MAX_RESULTS, search, search_stack
-from design_system import generate_design_system, persist_design_system
+from core import CSV_CONFIG, AVAILABLE_STACKS, MAX_RESULTS, search, search_stack  # type: ignore
+from design_system import generate_design_system, persist_design_system  # type: ignore
 
 # Force UTF-8 for stdout/stderr to handle emojis on Windows (cp1252 default)
 if sys.stdout.encoding and sys.stdout.encoding.lower() != 'utf-8':
@@ -32,12 +32,12 @@ def format_output(result):
     if "error" in result:
         return f"Error: {result['error']}"
 
-    output = []
+    output = []  # type: list[str]
     if result.get("stack"):
-        output.append(f"## UI Pro Max Stack Guidelines")
+        output.append("## UI Pro Max Stack Guidelines")
         output.append(f"**Stack:** {result['stack']} | **Query:** {result['query']}")
     else:
-        output.append(f"## UI Pro Max Search Results")
+        output.append("## UI Pro Max Search Results")
         output.append(f"**Domain:** {result['domain']} | **Query:** {result['query']}")
     output.append(f"**Source:** {result['file']} | **Found:** {result['count']} results\n")
 
@@ -46,7 +46,7 @@ def format_output(result):
         for key, value in row.items():
             value_str = str(value)
             if len(value_str) > 300:
-                value_str = value_str[:300] + "..."
+                value_str = value_str[0:300] + "..."  # type: ignore[index]
             output.append(f"- **{key}:** {value_str}")
         output.append("")
 

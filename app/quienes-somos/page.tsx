@@ -3,7 +3,7 @@
 import { FloatingNav } from "@/components/floating-nav"
 import { Footer } from "@/components/footer"
 import { Card } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+
 import { ScrollReveal } from "@/components/scroll-reveal"
 import { Leaf, Lightbulb, Award, Users, TrendingUp, Globe } from "lucide-react"
 import { useEffect } from "react"
@@ -56,13 +56,16 @@ export default function QuienesSomosPage() {
       <main className="pt-24 md:pt-32 pb-16">
         <div className="container mx-auto px-4 max-w-6xl">
           {/* Hero Section */}
+          {/* Hero Section */}
           <ScrollReveal>
-            <div className="text-center mb-16 md:mb-24">
-              <Badge className="mb-4 bg-accent/20 text-accent border-accent/30 text-sm md:text-base px-4 py-1">
+            <div className="text-left md:text-center mb-20 md:mb-32">
+              <span className="text-primary font-heading font-black uppercase tracking-[0.3em] text-sm mb-4 block">
                 Nuestra Historia
-              </Badge>
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 text-balance">¿Quiénes Somos?</h1>
-              <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto text-pretty">
+              </span>
+              <h1 className="text-5xl md:text-7xl font-heading font-black mb-8 text-balance leading-[1.1] tracking-tighter">
+                ¿Quiénes Somos?
+              </h1>
+              <p className="text-xl md:text-2xl font-sans font-medium text-muted-foreground text-pretty max-w-3xl mx-auto leading-relaxed">
                 M.J.M Soluciones Ecológicas nació de una visión clara: crear productos que protejan sin dañar. Somos
                 pioneros en el desarrollo de insecticidas biodegradables de alto rendimiento.
               </p>
@@ -72,14 +75,14 @@ export default function QuienesSomosPage() {
           {/* Mission & Vision */}
           <div className="grid md:grid-cols-2 gap-6 mb-16 md:mb-24">
             <ScrollReveal direction="left">
-              <Card className="p-8 bg-gradient-to-br from-primary/5 to-accent/5 border-primary/20 h-full">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="p-3 rounded-xl bg-primary/10">
-                    <Leaf className="h-6 w-6 text-primary" />
+              <Card className="glass-card rounded-[2rem] p-8 h-full flex flex-col hover:scale-[1.02] transition-all duration-500 cursor-default border-primary/10">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-14 h-14 rounded-2xl bg-primary/20 text-primary flex items-center justify-center shadow-inner">
+                    <Leaf className="h-7 w-7" />
                   </div>
-                  <h2 className="text-2xl font-bold text-primary">Nuestra Misión</h2>
+                  <h2 className="text-3xl font-heading font-black">Nuestra Misión</h2>
                 </div>
-                <p className="text-muted-foreground leading-relaxed">
+                <p className="text-muted-foreground leading-relaxed text-lg font-medium">
                   Desarrollar y comercializar soluciones ecológicas de control de plagas que sean efectivas, seguras y
                   sostenibles, contribuyendo a la salud pública y la preservación del medio ambiente.
                 </p>
@@ -87,14 +90,14 @@ export default function QuienesSomosPage() {
             </ScrollReveal>
 
             <ScrollReveal direction="right">
-              <Card className="p-8 bg-gradient-to-br from-accent/5 to-primary/5 border-accent/20 h-full">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="p-3 rounded-xl bg-accent/10">
-                    <Globe className="h-6 w-6 text-accent" />
+              <Card className="glass-card rounded-[2rem] p-8 h-full flex flex-col hover:scale-[1.02] transition-all duration-500 cursor-default border-accent/10">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-14 h-14 rounded-2xl bg-accent/20 text-accent flex items-center justify-center shadow-inner">
+                    <Globe className="h-7 w-7" />
                   </div>
-                  <h2 className="text-2xl font-bold text-accent">Nuestra Visión</h2>
+                  <h2 className="text-3xl font-heading font-black">Nuestra Visión</h2>
                 </div>
-                <p className="text-muted-foreground leading-relaxed">
+                <p className="text-muted-foreground leading-relaxed text-lg font-medium">
                   Ser la empresa líder en América Latina en soluciones ecológicas de control de plagas, reconocida por
                   nuestra innovación, calidad y compromiso con la sostenibilidad.
                 </p>
@@ -104,9 +107,12 @@ export default function QuienesSomosPage() {
 
           {/* Timeline Section */}
           <ScrollReveal>
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-5xl font-bold mb-4">Nuestro Recorrido</h2>
-              <p className="text-muted-foreground text-lg">
+            <div className="text-left md:text-center mb-16 md:mb-24">
+              <span className="text-primary font-heading font-black uppercase tracking-[0.3em] text-sm mb-4 block">
+                Nuestra Evolución
+              </span>
+              <h2 className="text-4xl md:text-6xl font-heading font-black mb-6 tracking-tighter text-balance">Nuestro Recorrido</h2>
+              <p className="text-xl md:text-2xl font-sans font-medium text-muted-foreground text-pretty max-w-3xl mx-auto leading-relaxed">
                 Desde nuestros inicios hasta convertirnos en líderes del sector
               </p>
             </div>
@@ -126,18 +132,17 @@ export default function QuienesSomosPage() {
                   >
                     {/* Contenido */}
                     <div className={`flex-1 ${index % 2 === 0 ? "md:text-right" : "md:text-left"}`}>
-                      <Card className="p-6 bg-card hover:shadow-xl transition-all duration-300 border-2 hover:border-primary/30">
+                      <Card className="glass-card rounded-[2rem] p-8 hover:scale-[1.02] transition-all duration-500 cursor-default border border-border hover:border-primary/30">
                         <div
-                          className={`flex items-center gap-3 mb-3 ${index % 2 === 0 ? "md:justify-end" : "md:justify-start"
+                          className={`flex items-center gap-3 mb-4 ${index % 2 === 0 ? "md:justify-end" : "md:justify-start"
                             } justify-start`}
                         >
-                          <Badge className={`${event.color} bg-transparent border-current text-lg px-3 py-1`}>
+                          <span className={`text-xs font-heading font-black uppercase tracking-widest ${event.color} bg-${event.color.split('-')[1]}/10 px-3 py-1.5 rounded-full`}>
                             {event.year}
-                          </Badge>
-                          <event.icon className={`h-5 w-5 ${event.color}`} />
+                          </span>
                         </div>
-                        <h3 className="text-xl md:text-2xl font-bold mb-2">{event.title}</h3>
-                        <p className="text-muted-foreground leading-relaxed">{event.description}</p>
+                        <h3 className="text-2xl md:text-3xl font-heading font-black mb-4 leading-tight">{event.title}</h3>
+                        <p className="text-muted-foreground leading-relaxed text-sm md:text-base font-medium">{event.description}</p>
                       </Card>
                     </div>
 
@@ -156,35 +161,38 @@ export default function QuienesSomosPage() {
 
           {/* Values Section */}
           <ScrollReveal>
-            <div className="mt-24 text-center">
-              <h2 className="text-3xl md:text-5xl font-bold mb-12">Nuestros Valores</h2>
-              <div className="grid md:grid-cols-3 gap-6">
-                <Card className="p-6 bg-gradient-to-br from-primary/5 to-transparent border-primary/20 hover:shadow-lg transition-all">
-                  <div className="p-3 rounded-xl bg-primary/10 w-fit mx-auto mb-4">
+            <div className="mt-32 text-left md:text-center mb-12">
+              <span className="text-primary font-heading font-black uppercase tracking-[0.3em] text-sm mb-4 block">
+                Pilares
+              </span>
+              <h2 className="text-4xl md:text-6xl font-heading font-black mb-16 tracking-tighter">Nuestros Valores</h2>
+              <div className="grid md:grid-cols-3 gap-8">
+                <Card className="glass-card rounded-[2rem] p-8 hover:scale-[1.02] transition-all duration-500 cursor-default flex flex-col items-start md:items-center text-left md:text-center border-primary/10">
+                  <div className="w-16 h-16 rounded-2xl bg-primary/20 text-primary flex items-center justify-center mb-6 shadow-inner">
                     <Leaf className="h-8 w-8 text-primary" />
                   </div>
-                  <h3 className="text-xl font-bold mb-2">Sostenibilidad</h3>
-                  <p className="text-muted-foreground">
+                  <h3 className="text-2xl font-heading font-black mb-4">Sostenibilidad</h3>
+                  <p className="text-muted-foreground text-sm md:text-base font-medium leading-relaxed">
                     Comprometidos con el cuidado del medio ambiente en cada producto que desarrollamos.
                   </p>
                 </Card>
 
-                <Card className="p-6 bg-gradient-to-br from-accent/5 to-transparent border-accent/20 hover:shadow-lg transition-all">
-                  <div className="p-3 rounded-xl bg-accent/10 w-fit mx-auto mb-4">
+                <Card className="glass-card rounded-[2rem] p-8 hover:scale-[1.02] transition-all duration-500 cursor-default flex flex-col items-start md:items-center text-left md:text-center border-accent/10">
+                  <div className="w-16 h-16 rounded-2xl bg-accent/20 text-accent flex items-center justify-center mb-6 shadow-inner">
                     <Award className="h-8 w-8 text-accent" />
                   </div>
-                  <h3 className="text-xl font-bold mb-2">Excelencia</h3>
-                  <p className="text-muted-foreground">
+                  <h3 className="text-2xl font-heading font-black mb-4">Excelencia</h3>
+                  <p className="text-muted-foreground text-sm md:text-base font-medium leading-relaxed">
                     Buscamos la máxima calidad y eficacia en cada fórmula que creamos.
                   </p>
                 </Card>
 
-                <Card className="p-6 bg-gradient-to-br from-primary/5 to-transparent border-primary/20 hover:shadow-lg transition-all">
-                  <div className="p-3 rounded-xl bg-primary/10 w-fit mx-auto mb-4">
+                <Card className="glass-card rounded-[2rem] p-8 hover:scale-[1.02] transition-all duration-500 cursor-default flex flex-col items-start md:items-center text-left md:text-center border-primary/10">
+                  <div className="w-16 h-16 rounded-2xl bg-primary/20 text-primary flex items-center justify-center mb-6 shadow-inner">
                     <Users className="h-8 w-8 text-primary" />
                   </div>
-                  <h3 className="text-xl font-bold mb-2">Comunidad</h3>
-                  <p className="text-muted-foreground">
+                  <h3 className="text-2xl font-heading font-black mb-4">Comunidad</h3>
+                  <p className="text-muted-foreground text-sm md:text-base font-medium leading-relaxed">
                     Creamos oportunidades de crecimiento para nuestros distribuidores y clientes.
                   </p>
                 </Card>

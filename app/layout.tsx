@@ -4,6 +4,7 @@ import { Inter, Montserrat } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { ThemeProvider } from "@/components/theme-provider"
 import { WhatsAppButton } from "@/components/whatsapp-button"
+import { LenisProvider } from "@/components/lenis-provider"
 import "./globals.css"
 
 const inter = Inter({ subsets: ["latin"] })
@@ -83,10 +84,12 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="es" suppressHydrationWarning>
+    <html lang="es" className="dark" suppressHydrationWarning>
       <body className={`${inter.className} ${montserrat.variable} font-sans antialiased`}>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-          {children}
+        <ThemeProvider attribute="class" defaultTheme="dark" forcedTheme="dark" disableTransitionOnChange>
+          <LenisProvider>
+            {children}
+          </LenisProvider>
           <WhatsAppButton />
         </ThemeProvider>
         <Analytics />

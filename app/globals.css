@@ -34,12 +34,7 @@
   --input: oklch(0.9 0.02 200);
   --ring: oklch(0.32 0.06 200);
   
-  /* Claymorphism Variables - Light Mode */
-  --clay-bg: oklch(0.99 0.005 200);
-  --clay-shadow-outer: 0 20px 40px -10px rgba(15, 23, 42, 0.15), 0 10px 15px -5px rgba(15, 23, 42, 0.05);
-  --clay-shadow-inner: inset 0 2px 5px rgba(255, 255, 255, 0.8), inset 0 -4px 10px rgba(0, 0, 0, 0.05);
-  
-  --radius: 1.5rem; /* Larger radius for Claymorphism */
+  --radius: 1.0rem; /* Cleaner radius for B2B */
 }
 
 .dark {
@@ -61,11 +56,6 @@
   
   --border: oklch(0.22 0.05 210);
   --input: oklch(0.22 0.05 210);
-
-  /* Claymorphism Variables - Dark Mode */
-  --clay-bg: oklch(0.18 0.05 210);
-  --clay-shadow-outer: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-  --clay-shadow-inner: inset 0 2px 4px rgba(255, 255, 255, 0.1), inset 0 -4px 8px rgba(0, 0, 0, 0.3);
 }
 
 @theme inline {
@@ -111,22 +101,18 @@
   }
 }
 
-/* Claymorphism Utility Classes */
+/* Professional Clean Utility Classes */
 @layer utilities {
-  .clay-card {
-    @apply bg-[var(--clay-bg)] transition-all duration-300;
-    box-shadow: var(--clay-shadow-outer), var(--clay-shadow-inner);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+  .clay-card, .glass-card {
+    @apply bg-card text-card-foreground rounded-xl border border-border shadow-sm transition-all duration-300;
   }
   
-  .clay-button {
-    @apply bg-primary text-primary-foreground px-6 py-3 rounded-full font-bold transition-all active:scale-95 hover:shadow-lg hover:-translate-y-0.5;
-    box-shadow: 0 10px 20px -5px oklch(from var(--primary) l c h / 0.3), 
-                inset 0 2px 4px rgba(255, 255, 255, 0.2);
+  .clay-button, .premium-button {
+    @apply inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-4 active:scale-95 shadow-sm;
   }
 
   .text-glow {
-    text-shadow: 0 0 20px oklch(from var(--accent) l c h / 0.5);
+    text-shadow: none; /* Removed for professional look */
   }
 
   .hide-scrollbar {

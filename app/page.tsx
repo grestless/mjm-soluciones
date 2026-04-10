@@ -1,47 +1,34 @@
 import { FloatingNav } from "@/components/floating-nav"
-import { HeroBento } from "@/components/hero-bento"
+import { HeroSection } from "@/components/ui/glassmorphism-trust-hero"
 import { BenefitsSection } from "@/components/benefits-section"
 import { ProductsGallery } from "@/components/products-gallery"
 import { TestimonialsSection } from "@/components/testimonials-section"
 import { TeamSection } from "@/components/team-section"
 import { ContactSection } from "@/components/contact-section"
 import { Footer } from "@/components/footer"
-import { ScrollReveal } from "@/components/scroll-reveal"
 import { RotatingTextSeparator } from "@/components/rotating-text-separator"
 
 export default function Home() {
   return (
     <main className="min-h-screen">
       <FloatingNav />
-      <HeroBento />
-      <ScrollReveal direction="up" delay={200}>
-        <div id="beneficios">
-          <BenefitsSection />
-        </div>
-      </ScrollReveal>
-      <ScrollReveal direction="up" delay={200}>
-        <div id="productos">
-          <ProductsGallery />
-        </div>
-      </ScrollReveal>
-      <ScrollReveal direction="up" delay={200}>
-        <RotatingTextSeparator />
-      </ScrollReveal>
-      <ScrollReveal direction="up" delay={200}>
-        <div id="casos">
-          <TestimonialsSection limit={3} />
-        </div>
-      </ScrollReveal>
-      <ScrollReveal direction="up" delay={200}>
-        <div id="equipo">
-          <TeamSection />
-        </div>
-      </ScrollReveal>
-      <ScrollReveal direction="up" delay={200}>
-        <div id="contacto">
-          <ContactSection />
-        </div>
-      </ScrollReveal>
+      <HeroSection />
+      <div id="beneficios">
+        <BenefitsSection />
+      </div>
+      <div id="productos">
+        <ProductsGallery />
+      </div>
+      <RotatingTextSeparator />
+      <div id="casos">
+        <TestimonialsSection limit={3} />
+      </div>
+      <div id="equipo">
+        <TeamSection />
+      </div>
+      <div id="contacto">
+        <ContactSection />
+      </div>
       <Footer />
       <script
         type="application/ld+json"

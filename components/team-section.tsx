@@ -3,8 +3,11 @@
 import { Button } from "@/components/ui/button"
 import { Check, TrendingUp, Users, Zap } from "lucide-react"
 import { motion, Variants } from "framer-motion"
+import { useLenis } from 'lenis/react'
 
 export function TeamSection() {
+  const lenis = useLenis()
+
   const plans = [
     {
       name: "Emprendedor Inicial",
@@ -73,9 +76,8 @@ export function TeamSection() {
       y: 0,
       opacity: 1,
       transition: {
-        type: "spring" as const,
-        stiffness: 100,
-        damping: 15,
+        duration: 0.5,
+        ease: "easeOut",
       },
     },
   }
@@ -84,8 +86,8 @@ export function TeamSection() {
     <section id="equipo" className="relative py-32 px-4 overflow-hidden bg-background">
       {/* Background Decor */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full -z-10 pointer-events-none">
-        <div className="absolute top-[20%] left-[10%] w-[600px] h-[600px] bg-primary/5 blur-[140px] rounded-full" />
-        <div className="absolute bottom-[20%] right-[10%] w-[600px] h-[600px] bg-accent/5 blur-[140px] rounded-full" />
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-primary/5 via-transparent to-transparent" />
+        <div className="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-accent/5 via-transparent to-transparent" />
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
@@ -161,7 +163,10 @@ export function TeamSection() {
                     }`}
                     onClick={() => {
                       const element = document.getElementById("contacto")
-                      if (element) element.scrollIntoView({ behavior: "smooth" })
+                      if (element) {
+                        if (lenis) lenis.scrollTo(element)
+                        else element.scrollIntoView({ behavior: "smooth" })
+                      }
                     }}
                   >
                     Solicitar Información
@@ -189,7 +194,10 @@ export function TeamSection() {
             className="clay-button px-12 py-8 text-xl h-auto"
             onClick={() => {
               const element = document.getElementById("contacto")
-              if (element) element.scrollIntoView({ behavior: "smooth" })
+              if (element) {
+                if (lenis) lenis.scrollTo(element)
+                else element.scrollIntoView({ behavior: "smooth" })
+              }
             }}
           >
             Agendar Reunión Técnica
